@@ -1,0 +1,1700 @@
+---
+title: "DEseq2 pipleine"
+output: html_notebook
+---
+```{r}
+## RNA-seq analysis with DESeq2
+##Parts of this script are also based off of the bioconductor page:
+##http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+##https://bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html
+##referenced 2.3.20
+## Stephen Turner, @genetics_blog
+##https://gist.github.com/stephenturner/f60c1934405c127f09a6#file-deseq2-analysis-template-r
+##downloaded 2.3.2020
+#Code written by Mike Sportiello. Michael_sportiello@urmc.rochester.edu
+```
+
+```{r}
+# Import data from featureCounts
+countdata <- read.table("rawcounts.stim.5.13.20.txt", header=TRUE, row.names=1)
+
+# Convert to matrix
+countdata <- as.matrix(countdata)
+head(countdata)
+
+# Assign conditions
+(condition <- factor(c(rep("CD103", 3), rep("DP", 3), rep("DN",3), rep("CD49a",2))))
+#load libraries
+library(DESeq2)
+library(dendextend)
+```
+
+
+```{r}
+#create dendrogram of samples
+dist <- dist(t(countdata), method="euclidean")
+cluster <- hclust(dist)
+dend <- as.dendrogram(cluster)
+dend <- hang.dendrogram(dend, hang=-1) #Leaves at same height
+dend <- set(dend, "branches_lwd", 2) #Thick branches
+dend <- set(dend, "labels_cex", 1) #label font size
+#Plot the dendrogram
+par(mar = c(10,5,3,1))
+plot(dend, main = "Sample Clustering on stimulated samples\ndist.method=Eucleadian", ylab = "Height") 
+```
+
+```{r}
+# Create a coldata frame and instantiate the DESeqDataSet. See ?DESeqDataSetFromMatrix
+(coldata <- data.frame(row.names=colnames(countdata), condition))
+dds <- DESeqDataSetFromMatrix(countData=countdata, colData=coldata, design= ~ condition)
+dds
+```
+
+
+```{r}
+# Begin the DESeq pipeline
+dds <- DESeq(dds)
+resultsNames(dds)
+```
+
+```{r}
+#Dispersions
+#Plotting the dispersion estimates is a useful diagnostic. The dispersion plot below is typical, with the final estimates shrunk from the gene-wise estimates towards the fitted estimates. Some gene-wise estimates are flagged as outliers and not shrunk towards the fitted value, (this outlier detection is described in the manual page for estimateDispersionsMAP). The amount of shrinkage can be more or less than seen here, depending on the sample size, the number of coefficients, the row mean and the variability of the gene-wise estimates.
+#load colors for future plots
+library(viridis)
+viridispal4<- viridis(n=4)
+#plot dispersion plots
+plotDispEsts(dds, main="Dispersion plot", genecol='#440154FF',finalcol='#21908CFF',fitcol='#FDE725FF')
+```
+
+
+```{r}
+# Regularized log transformation for clustering/heatmaps, etc
+library(ggplot2)
+rld <- rlogTransformation(dds)
+head(assay(rld))
+#plot histogram of this transformed data
+hist(assay(rld),col='#440154FF')
+```
+
+
+```{r}
+library("FactoMineR")
+library("factoextra")
+
+
+#' @include utilities.R
+NULL
+#' Plot confidence ellipses.
+#' @description Plot confidence ellipses around barycenters. The method for
+#'   computing confidence ellipses has been modified from \code{FactoMineR::coord.ellipse()}.
+#' @inheritParams ggplot2::layer
+#' @inheritParams ggplot2::stat_ellipse
+#' @param level confidence level used to construct the ellipses. By
+#'   default, 0.95.
+#' @param npoint number of points used to draw the ellipses.
+#' @param bary logical value. If TRUE, the coordinates of the ellipse around the
+#'   barycentre of individuals are calculated.
+#' @seealso \code{\link{stat_conf_ellipse}}
+#' @examples
+#' # Load data
+#' data("mtcars")
+#' df <- mtcars
+#' df$cyl <- as.factor(df$cyl)
+#'
+#' # scatter plot with confidence ellipses
+#' ggscatter(df, x = "wt", y = "mpg", color = "cyl")+
+#'  stat_conf_ellipse(aes(color = cyl))
+#'
+#' ggscatter(df, x = "wt", y = "mpg", color = "cyl")+
+#'  stat_conf_ellipse(aes(color = cyl, fill = cyl), alpha = 0.1, geom = "polygon")
+#'
+#' @export
+stat_conf_ellipse <- function(mapping = NULL, data = NULL, geom = "path",
+                              position = "identity", na.rm = FALSE, show.legend = NA,
+                              inherit.aes = TRUE, level = 0.95, npoint = 100, bary = TRUE,
+                              ...) {
+  layer(
+    stat = StatConfEllipse, data = data, mapping = mapping, geom = geom,
+    position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+    params = list(na.rm = na.rm,  level = level, npoint = npoint, bary = bary, ...)
+  )
+}
+
+
+StatConfEllipse <- ggproto("StatConfEllipse", Stat,
+                           required_aes = c("x", "y"),
+                           
+                           compute_group = function(data, scales, params, level = 0.95,
+                                                    npoint = 100, bary = TRUE) {
+                             
+                             .coord_ellipse (data$x, data$y, level = level,
+                                             npoint = npoint, bary = bary)
+                           }
+)
+
+# Compute confidence ellipses.
+#  x,y x and y variables for drawing.
+#  level confidence level used to construct the ellipses. By
+#   default, 0.95.
+#  npoint number of points used to draw the ellipses.
+#  bary logical value. If TRUE, the coordinates of the ellipse around the
+#   barycentre of individuals are calculated.
+.coord_ellipse <- function ( x, y, level = 0.95,
+                             npoint = 100, bary = FALSE)
+{
+  
+  .ellipse <- function(x, scale = c(1, 1), centre = c(0, 0),
+                       level = 0.95, t = sqrt(stats::qchisq(level, 2)), which = c(1,
+                                                                                  2), npoints = 100) {
+    names <- c("x", "y")
+    if (is.matrix(x)) {
+      xind <- which[1]
+      yind <- which[2]
+      r <- x[xind, yind]
+      if (missing(scale)) {
+        scale <- sqrt(c(x[xind, xind], x[yind, yind]))
+        if (scale[1] > 0)
+          r <- r/scale[1]
+        if (scale[2] > 0)
+          r <- r/scale[2]
+      }
+      if (!is.null(dimnames(x)[[1]]))
+        names <- dimnames(x)[[1]][c(xind, yind)]
+    }
+    else r <- x
+    r <- min(max(r, -1), 1)
+    d <- acos(r)
+    a <- seq(0, 2 * pi, len = npoints)
+    matrix(c(t * scale[1] * cos(a + d/2) + centre[1], t *
+               scale[2] * cos(a - d/2) + centre[2]), npoints, 2,
+           dimnames = list(NULL, names))
+  }
+  
+  
+  center <- c(mean(x, na.rm = TRUE), mean(y, na.rm = TRUE))
+  tab <- data.frame(x = x, y = y)
+  mat.cov <- stats::cov(tab)
+  if (bary)
+    mat.cov = mat.cov/nrow(tab)
+  res <- .ellipse(mat.cov, centre = center, level = level, npoints = npoint)
+  return(res)
+}
+```
+
+
+```{r}
+#plot PCAs with confidence intervals
+cbpal<-c("#acfafa",'#414141',"#f29737","#8744f6")
+pca<-plotPCA(rld)
+pca+scale_colour_viridis(discrete=T) + scale_color_manual(values = cbpal) +stat_conf_ellipse() +theme_bw()
+```
+
+
+```{r}
+#plot pca loadings
+rv <- rowVars(assay(rld))
+select <- order(rv, decreasing=TRUE)[seq_len(min(500,length(rv)))]
+subset <- assay(rld)[select, ]
+pca <- prcomp(t(subset))
+
+
+loadings <- as.data.frame(pca$rotation)
+loadings$genes<-row.names(loadings)
+loadings <- as.data.frame(pca$rotation)
+loadings$genes<-row.names(loadings)
+
+loadings<-loadings[order(-loadings$PC1),]
+head(loadings)
+princ1<-loadings[1:10,]
+loadings<-loadings[order(loadings$PC1),]
+princ1b<-loadings[1:10,]
+head(princ1)
+head(princ1b)
+princ1<-rbind(princ1,princ1b)
+
+loadings<-loadings[order(-loadings$PC2),]
+head(loadings)
+princ2<-loadings[1:10,]
+loadings<-loadings[order(loadings$PC2),]
+princ2b<-loadings[1:10,]
+head(princ2)
+head(princ2b)
+princ2<-rbind(princ2,princ2b)
+
+loadings<-loadings[order(-loadings$PC3),]
+head(loadings)
+princ3<-loadings[1:10,]
+loadings<-loadings[order(loadings$PC3),]
+princ3b<-loadings[1:10,]
+head(princ3)
+head(princ3b)
+princ3<-rbind(princ3,princ3b)
+
+#plots
+pc1stim<-ggplot(princ1,aes(x=reorder(rownames(princ1),PC1),y=PC1,fill=sign(PC1)))+
+  geom_col()+coord_flip()+
+  scale_fill_viridis(option='plasma',begin = .2,end = .65)+
+  theme(axis.title.y = element_blank())+
+  theme(plot.title = element_text(color="black", size=14, face="bold",hjust = .5),
+        axis.title = element_text(color='black'),
+        axis.text = element_text(color='black'),
+        text = element_text(face= 'bold',color='black'))+
+ labs(title='PC1',y='PC1 Contribution')+
+  theme(legend.position = 'none')
+pc2stim<-ggplot(princ2,aes(x=reorder(rownames(princ2),PC2),y=PC2,fill=sign(PC2)))+geom_col()+coord_flip()+scale_fill_viridis(option='plasma',begin = .2,end = .65)+
+    theme(axis.title.y = element_blank())+
+  theme(plot.title = element_text(color="black", size=14, face="bold",hjust = .5),
+        axis.title = element_text(color='black'),
+        axis.text = element_text(color='black'),
+        text = element_text(face= 'bold',color='black'))+
+ labs(title='PC2',y='PC2 Contribution')+
+  theme(legend.position = 'none')
+
+pc3stim<-ggplot(princ3,aes(x=reorder(rownames(princ3),PC3),y=PC3,fill=sign(PC3)))+geom_col()+coord_flip()+scale_fill_viridis(option='plasma',begin = .2,end = .65)+
+    theme(axis.title.y = element_blank())+
+  theme(plot.title = element_text(color="black", size=14, face="bold",hjust = .5),
+        axis.title = element_text(color='black'),
+        axis.text = element_text(color='black'),
+        text = element_text(face= 'bold',color='black'))+
+ labs(title='PC3',y='PC3 Contribution')+
+  theme(legend.position = 'none')
+
+library(gridExtra)
+gridpcloadings<-grid.arrange(pc1stim,pc2stim,pc3stim,nrow=1)
+
+ggsave(file.path("./", paste0("pcloadings.integrinskept.", Sys.Date(), ".png")), plot = gridpcloadings, height = 4, width = 8, units = "in",dpi = 600)
+##
+
+```
+
+```{r}
+  ## the contribution to the total variance for each component
+     percentVar <- 100*(pca$sdev^2 / sum( pca$sdev^2 ))
+     scree_plot=data.frame(percentVar)
+     scree_plot[,2]<- c(1:11)
+     colnames(scree_plot)<-c("Variance","component_number")
+     scree_plot$component_number <- factor(scree_plot$component_number, levels = c(1:12),labels = paste0('PC', c(1:12)))
+    pcscree<- ggplot(scree_plot, mapping=aes(x=component_number, y=Variance))+       
+       geom_bar(stat="identity")+
+       labs(x='Component Number')+
+       theme(
+         plot.title = element_text(color="black", size=14, face="bold",hjust = .5),
+        axis.title = element_text(color='black'),
+        axis.text = element_text(color='black'),
+        text = element_text(face= 'bold',color='black'))
+     pcscree
+     ggsave(file.path("./", paste0("pcscree.integrinskept.", Sys.Date(), ".png")), plot = pcscree, height = 3, width = 8, units = "in",dpi = 600)
+
+```
+
+```{r}
+# Colors for plots below
+library(RColorBrewer)
+(mycols <- brewer.pal(8, "Dark2")[1:length(unique(condition))])
+mycols3 <-colorspace::sequential_hcl(5, "grays")
+```
+
+```{r}
+# Sample distance heatmap
+sampleDists <- as.matrix(dist(t(assay(rld))))
+library(gplots)
+library(viridis)
+head(sampleDists)
+heatmap.2(as.matrix(sampleDists), trace="none",
+          col=viridis,
+          ColSideColors=mycols3[condition], RowSideColors=mycols3[condition],
+          margin=c(10, 10), main="Sample Distance Matrix",Colv=F,Rowv=F,density.info = 'none')
+```
+
+```{r}
+#create more color palets
+wb <- c("white", "black")
+col1 <- colorRampPalette(c("#7F0000", "red", "#FF7F00", "yellow", "white",
+                           "cyan", "#007FFF", "blue","#00007F"))
+col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582",
+                           "#FDDBC7", "#FFFFFF", "#D1E5F0", "#92C5DE",
+                           "#4393C3", "#2166AC", "#053061"))
+col3 <- colorRampPalette(c("red", "white", "blue"))
+col4 <- colorRampPalette(c("#7F0000", "red", "#FF7F00", "yellow", "#7FFF7F",
+                           "cyan", "#007FFF", "blue", "#00007F"))
+col5 <- colorRampPalette(c('#ff00ff','magenta','#7fff7f','cyan'))
+col6 <- colorRampPalette(c('#008000','green','#FF8C00','darkorange'))
+col7 <- colorRampPalette(c('#1b9e77', 'green', '#d95f02','orange','#7570b3','purple'))
+#create correlation plots
+VSTdata <- vst(dds@assays@data@listData$counts)
+cormat <- (cor(VSTdata, method='spearman'))
+library(corrplot)
+library(viridis)
+#this correlation plot will include comparisons of samples to themselves
+corrplot(cormat, type='upper',method='color',col=viridis(direction=-1,100000),is.corr=F, tl.col='black',title='Correlation Matrix',diag=T)
+#this plot will remove those "diagnoal" comparisons where the samples are compared to themselves
+corrplot(cormat, type='upper',method='color',col=viridis(direction=-1,100000),is.corr=F, tl.col='black',title='Correlation Matrix',diag=F)
+```
+
+
+
+
+```{r}
+# We estimate the variance for each row in the logcounts matrix
+logcounts <- counts(dds, normalized=TRUE)
+var_genes <- apply(logcounts, 1, var)
+head(var_genes)
+```
+
+
+```{r}
+#plot heatmaps using specific genes using log counts
+library(dplyr)
+library(tibble)
+heatmapgenes<-c(
+  'Tnf',
+  'Il2',
+  'Gzma',
+  'Prf1',
+  'Ifng'
+)
+logcountsheatmap<-as.data.frame(logcounts) %>% rownames_to_column('genes')
+logcountsheatmap <- logcountsheatmap %>% filter(logcountsheatmap$genes %in% heatmapgenes)
+logcountsheatmap <- logcountsheatmap %>% column_to_rownames('genes')
+heatmap.2(as.matrix(logcountsheatmap),col=viridis::plasma,trace="none", main="Select genes 1-stim",scale='row', density.info = 'none', margin=c(8, 6),ColSideColors = c('#1B1B1B','#1B1B1B','#1B1B1B','#585858','#585858','#585858','#969696','#969696','#969696','#D0D0D0','#D0D0D0'),srtCol = 45,colsep=c(3,6,9),Colv=F,Rowv=F,labCol = '')
+#new heatmap using these genes
+heatmapgenes<-c(
+  'Pdcd1',
+  'Cd244',
+  'Havcr2',
+  'Tigit',
+  'Cd200r1',
+  'Klrc1'
+)
+logcountsheatmap<-as.data.frame(logcounts) %>% rownames_to_column('genes')
+logcountsheatmap <- logcountsheatmap %>% filter(logcountsheatmap$genes %in% heatmapgenes)
+logcountsheatmap <- logcountsheatmap %>% column_to_rownames('genes')
+heatmap.2(as.matrix(logcountsheatmap),col=viridis::plasma,trace="none", main="Select genes 2-stim",scale='row', density.info = 'none',margin=c(8, 6),ColSideColors = c('#1B1B1B','#1B1B1B','#1B1B1B','#585858','#585858','#585858','#969696','#969696','#969696','#D0D0D0','#D0D0D0'),srtCol = 45,colsep=c(3,6,9),Colv=F,Rowv=F,labCol = '')
+
+#new heatmap using these genes
+heatmapgenes<-c('Csf2','Itgb2','Prf1','Pik3cd','Itgal','Tnf','Ppp3ca','Klrk1','Tnfsf10','Rac2','Ptk2b','Fyn','Klrc1','Mapk3','Prkcg','Klrc2','Nfatc2','Gzmb','Nfatc1','Fasl','Ifng','Fcgr4','Lcp2','Ucbp1','H2-d1')
+logcountsheatmap<-as.data.frame(logcounts) %>% rownames_to_column('genes')
+logcountsheatmap <- logcountsheatmap %>% filter(logcountsheatmap$genes %in% heatmapgenes)
+logcountsheatmap <- logcountsheatmap %>% column_to_rownames('genes')
+heatmap.2(as.matrix(logcountsheatmap),col=viridis::plasma,trace="none", main="Cytotoxicity",scale='row', density.info = 'none',margin=c(8, 6),ColSideColors = c('#1B1B1B','#1B1B1B','#1B1B1B','#585858','#585858','#585858','#969696','#969696','#969696','#D0D0D0','#D0D0D0'),srtCol = 45,colsep=c(3,6,9),cexRow = 1,Colv=F,Rowv=F,labCol = '')
+
+#new heatmap using these genes
+heatmapgenes<-c('Itk','Csf2','Pik3cd','Cd3g','Tnf','Rasgrp1','Ppp3ca','Grap2','Pak6','Fyn','Mapk3','Il10','Jun','Nfatc2','Cd8b1','Nfatc1','Fos','Mapk14','Il2','Il5','Cd40lg','Ifng','Cd8a','Cd28','Lcp2','Pdcd1','Card11')
+logcountsheatmap<-as.data.frame(logcounts) %>% rownames_to_column('genes')
+logcountsheatmap <- logcountsheatmap %>% filter(logcountsheatmap$genes %in% heatmapgenes)
+logcountsheatmap <- logcountsheatmap %>% column_to_rownames('genes')
+heatmap.2(as.matrix(logcountsheatmap),col=viridis::plasma,trace="none", main="TCR signalling",scale='row', density.info = 'none',margin=c(6, 6),ColSideColors = c('#1B1B1B','#1B1B1B','#1B1B1B','#585858','#585858','#585858','#969696','#969696','#969696','#D0D0D0','#D0D0D0'),srtCol = 45,colsep=c(3,6,9),cexRow = 1,Colv=F,Rowv=F,labCol = '')
+
+#new heatmap using these genes
+heatmapgenes<-c('Cd86','Jun','Cxcl9','Ticam2','Cd80','Pik3cd','Fos','Mapk14','Tnf','Il1b','Ccl4','Ccl3','Irf5','Tlr2','Mapk3')
+logcountsheatmap<-as.data.frame(logcounts) %>% rownames_to_column('genes')
+logcountsheatmap <- logcountsheatmap %>% filter(logcountsheatmap$genes %in% heatmapgenes)
+logcountsheatmap <- logcountsheatmap %>% column_to_rownames('genes')
+heatmap.2(as.matrix(logcountsheatmap),col=viridis::plasma,trace="none", main="TLR Signalling",scale='row', density.info = 'none',margin=c(8, 6),ColSideColors = c('#1B1B1B','#1B1B1B','#1B1B1B','#585858','#585858','#585858','#969696','#969696','#969696','#D0D0D0','#D0D0D0'),srtCol = 45,colsep=c(3,6,9),cexRow = 1,Colv=F,Rowv=F,labCol = '')
+```
+
+```{r}
+#Shrinkage of effect size
+library(ashr)
+res.CD103vsCD49a <- lfcShrink(dds,contrast =c('condition','CD103','CD49a'),type='ashr')
+res.CD103vsDN <- lfcShrink(dds,contrast =c('condition','CD103','DN'),type='ashr')
+res.CD103vsDP <- lfcShrink(dds,contrast =c('condition','CD103','DP'),type='ashr')
+res.CD49avsDP <- lfcShrink(dds,contrast =c('condition','CD49a','DP'),type='ashr')
+res.CD49avsDN <- lfcShrink(dds,contrast =c('condition','CD49a','DN'),type='ashr')
+res.DPvsDN <- lfcShrink(dds,contrast =c('condition','DP','DN'),type='ashr')
+
+# Get differential expression results
+res.CD103vsCD49a <- res.CD103vsCD49a[res.CD103vsCD49a$baseMean>10,]
+res.CD103vsDN <- res.CD103vsDN[res.CD103vsDN$baseMean>10,]
+res.CD103vsDP <- res.CD103vsDP[res.CD103vsDP$baseMean>10,]
+res.CD49avsDP <- res.CD49avsDP[res.CD49avsDP$baseMean>10,]
+res.CD49avsDN <- res.CD49avsDN[res.CD49avsDN$baseMean>10,]
+res.DPvsDN <- res.DPvsDN[res.DPvsDN$baseMean>10,]
+
+res.CD103vsCD49a <- na.omit(res.CD103vsCD49a)
+res.CD103vsDN  <- na.omit(res.CD103vsDN)
+res.CD103vsDP <- na.omit(res.CD103vsDP)
+res.CD49avsDP <- na.omit(res.CD49avsDP)
+res.CD49avsDN  <- na.omit(res.CD49avsDN)
+res.DPvsDN <- na.omit(res.DPvsDN)
+
+res.CD103vsCD49a[!complete.cases(res.CD103vsCD49a),]
+res.CD103vsDN[!complete.cases(res.CD103vsDN),]
+res.CD103vsDP[!complete.cases(res.CD103vsDP),]
+res.CD49avsDP[!complete.cases(res.CD49avsDP),]
+res.CD49avsDN[!complete.cases(res.CD49avsDN),]
+res.DPvsDN[!complete.cases(res.DPvsDN),]
+
+#How many results have a p value of less than 0.05?
+table(res.CD103vsCD49a$padj<0.05)
+table(res.CD103vsDN$padj<0.05)
+table(res.CD103vsDP$padj<0.05)
+table(res.CD49avsDP$padj<0.05)
+table(res.CD49avsDN$padj<0.05)
+table(res.DPvsDN$padj<0.05)
+
+## Order by adjusted p-value
+res.CD103vsCD49a <- res.CD103vsCD49a[order(res.CD103vsCD49a$padj), ]
+res.CD103vsDN <- res.CD103vsDN[order(res.CD103vsDN$padj), ]
+res.CD103vsDP <- res.CD103vsDP[order(res.CD103vsDP$padj), ]
+res.CD49avsDP <- res.CD49avsDP[order(res.CD49avsDP$padj), ]
+res.CD49avsDN <- res.CD49avsDN[order(res.CD49avsDN$padj), ]
+res.DPvsDN <- res.DPvsDN[order(res.DPvsDN$padj), ]
+
+#look at the first few lines
+head(res.CD103vsCD49a)
+head(res.CD103vsDN)
+head(res.CD103vsDP)
+head(res.CD49avsDP)
+head(res.CD49avsDN)
+head(res.DPvsDN)
+```
+
+```{r}
+#MA plots
+#An MA-plot (Dudoit et al. 2002) provides a useful overview for the distribution of the estimated coefficients in the model, e.g. the comparisons of interest, across all genes. On the y-axis, the “M” stands for “minus” – subtraction of log values is equivalent to the log of the ratio – and on the x-axis, the “A” stands for “average”. You may hear this plot also referred to as a mean-difference plot, or a Bland-Altman plot.
+plotMA(res.CD103vsDP, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+plotMA(res.CD103vsDN, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+plotMA(res.CD103vsCD49a, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+plotMA(res.CD49avsDP, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+plotMA(res.CD49avsDN, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+plotMA(res.DPvsDN, ylim=c(-2,2),colNonSig="#440154FF",colSig="#21908CFF",colLine="#FDE725FF")
+
+```
+
+```{r}
+#IHW
+#run IHW package (independent hypothesis testing) from this paper: 
+#http://bioconductor.org/packages/release/bioc/vignettes/IHW/inst/doc/introduction_to_ihw.html#an-example-rna-seq-differential-expression
+#https://www.nature.com/articles/nmeth.3885
+#Independent hypothesis weighting is a more powerful way to investigate differential expression. The citations above explain in full.
+library("IHW")
+res.CD103vsCD49aDF <- as.data.frame(res.CD103vsCD49a)
+res.CD103vsDPDF <- as.data.frame(res.CD103vsDP)
+res.CD103vsDNDF <- as.data.frame(res.CD103vsDN)
+res.CD49avsDPDF <- as.data.frame(res.CD49avsDP)
+res.CD49avsDNDF <- as.data.frame(res.CD49avsDN)
+res.DPvsDNDF <- as.data.frame(res.DPvsDN)
+
+#In particular, we have p-values and baseMean (i.e., the mean of normalized counts) for each gene. As argued in the DESeq2 paper, these two statistics are approximately independent under the null hypothesis. Thus we have all the ingredients necessary for a IHW analysis (p-values and covariates), which we will apply at a significance level 0.05.
+ihw.res.CD103vsCD49a <- ihw(pvalue ~ baseMean,  data = res.CD103vsCD49aDF, alpha = 0.05)
+ihw.res.CD103vsDP <- ihw(pvalue ~ baseMean,  data = res.CD103vsDPDF, alpha = 0.05)
+ihw.res.CD103vsDN <- ihw(pvalue ~ baseMean,  data = res.CD103vsDNDF, alpha = 0.05)
+ihw.res.CD49avsDP <- ihw(pvalue ~ baseMean,  data = res.CD49avsDPDF, alpha = 0.05)
+ihw.res.CD49avsDN <- ihw(pvalue ~ baseMean,  data = res.CD49avsDNDF, alpha = 0.05)
+ihw.res.DPvsDN <- ihw(pvalue ~ baseMean,  data = res.DPvsDNDF, alpha = 0.05)
+#This returns an object of the class ihwResult.
+```
+
+
+
+```{r}
+#add the gene names to the ihw df so we can get the gene names to give to enrichr
+#Note the weighted p value cutoff is 0.05 and that the log2foldchange must be 
+#greater than 1 or less than -1 to be considered differentially expressed
+#CD103vsCD49a
+de.ihw.res.CD103vsCD49a <- ihw.res.CD103vsCD49a@df
+dim(res.CD103vsCD49a)
+dim(de.ihw.res.CD103vsCD49a)
+genes.res.CD103vsCD49a <- rownames(res.CD103vsCD49a)
+genes.res.CD103vsCD49a <- as.vector(genes.res.CD103vsCD49a)
+de.ihw.res.CD103vsCD49a["gene"] <- genes.res.CD103vsCD49a
+ihw.res.CD103vsCD49a.all <- de.ihw.res.CD103vsCD49a
+de.ihw.res.CD103vsCD49a <- de.ihw.res.CD103vsCD49a[de.ihw.res.CD103vsCD49a[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.CD103vsCD49a)
+ihw.genes.res.CD103vsCD49a <- de.ihw.res.CD103vsCD49a$gene
+head(ihw.genes.res.CD103vsCD49a)
+ihw.res.CD103vsCD49a.all <- data.frame(ihw.res.CD103vsCD49a.all, row.names = 8)
+ihw.res.CD103vsCD49a.all['log2FoldChange'] <- as.vector(res.CD103vsCD49a$log2FoldChange)
+#make set of genes that are up and down regulated
+ihw.genes.res.CD103vsCD49a.up <- ihw.res.CD103vsCD49a.all[ihw.res.CD103vsCD49a.all[,"log2FoldChange"]>1,]
+ihw.genes.res.CD103vsCD49a.up <- ihw.genes.res.CD103vsCD49a.up[ihw.genes.res.CD103vsCD49a.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.CD103vsCD49a.down <- ihw.res.CD103vsCD49a.all[ihw.res.CD103vsCD49a.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.CD103vsCD49a.down <- ihw.genes.res.CD103vsCD49a.down[ihw.genes.res.CD103vsCD49a.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.CD103vsCD49a <- rownames(ihw.genes.res.CD103vsCD49a.up)
+downgenes.ihw.res.CD103vsCD49a <- rownames(ihw.genes.res.CD103vsCD49a.down)
+
+#CD103vsDP
+de.ihw.res.CD103vsDP <- ihw.res.CD103vsDP@df
+dim(res.CD103vsDP)
+dim(de.ihw.res.CD103vsDP)
+genes.res.CD103vsDP <- rownames(res.CD103vsDP)
+genes.res.CD103vsDP <- as.vector(genes.res.CD103vsDP)
+de.ihw.res.CD103vsDP["gene"] <- genes.res.CD103vsDP
+ihw.res.CD103vsDP.all <- de.ihw.res.CD103vsDP
+de.ihw.res.CD103vsDP <- de.ihw.res.CD103vsDP[de.ihw.res.CD103vsDP[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.CD103vsDP)
+ihw.genes.res.CD103vsDP <- de.ihw.res.CD103vsDP$gene
+head(ihw.genes.res.CD103vsDP)
+ihw.res.CD103vsDP.all <- data.frame(ihw.res.CD103vsDP.all, row.names = 8)
+ihw.res.CD103vsDP.all['log2FoldChange'] <- as.vector(res.CD103vsDP$log2FoldChange)
+#make set of genes that are up and down regulated
+ihw.genes.res.CD103vsDP.up <- ihw.res.CD103vsDP.all[ihw.res.CD103vsDP.all[,"log2FoldChange"]>1,]
+ihw.genes.res.CD103vsDP.up <- ihw.genes.res.CD103vsDP.up[ihw.genes.res.CD103vsDP.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.CD103vsDP.down <- ihw.res.CD103vsDP.all[ihw.res.CD103vsDP.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.CD103vsDP.down <- ihw.genes.res.CD103vsDP.down[ihw.genes.res.CD103vsDP.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.CD103vsDP <- rownames(ihw.genes.res.CD103vsDP.up)
+downgenes.ihw.res.CD103vsDP <- rownames(ihw.genes.res.CD103vsDP.down)
+
+#CD103vsDN
+de.ihw.res.CD103vsDN <- ihw.res.CD103vsDN@df
+dim(res.CD103vsDN)
+dim(de.ihw.res.CD103vsDN)
+genes.res.CD103vsDN <- rownames(res.CD103vsDN)
+genes.res.CD103vsDN <- as.vector(genes.res.CD103vsDN)
+de.ihw.res.CD103vsDN["gene"] <- genes.res.CD103vsDN
+ihw.res.CD103vsDN.all <- de.ihw.res.CD103vsDN
+de.ihw.res.CD103vsDN <- de.ihw.res.CD103vsDN[de.ihw.res.CD103vsDN[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.CD103vsDN)
+ihw.genes.res.CD103vsDN <- de.ihw.res.CD103vsDN$gene
+head(ihw.genes.res.CD103vsDN)
+ihw.res.CD103vsDN.all <- data.frame(ihw.res.CD103vsDN.all, row.names = 8)
+ihw.res.CD103vsDN.all['log2FoldChange'] <- as.vector(res.CD103vsDN$log2FoldChange)
+#make set of genes that are up and down regulated
+ihw.genes.res.CD103vsDN.up <- ihw.res.CD103vsDN.all[ihw.res.CD103vsDN.all[,"log2FoldChange"]>1,]
+ihw.genes.res.CD103vsDN.up <- ihw.genes.res.CD103vsDN.up[ihw.genes.res.CD103vsDN.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.CD103vsDN.down <- ihw.res.CD103vsDN.all[ihw.res.CD103vsDN.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.CD103vsDN.down <- ihw.genes.res.CD103vsDN.down[ihw.genes.res.CD103vsDN.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.CD103vsDN <- rownames(ihw.genes.res.CD103vsDN.up)
+downgenes.ihw.res.CD103vsDN <- rownames(ihw.genes.res.CD103vsDN.down)
+
+#CD49avsDP
+de.ihw.res.CD49avsDP <- ihw.res.CD49avsDP@df
+dim(res.CD49avsDP)
+dim(de.ihw.res.CD49avsDP)
+genes.res.CD49avsDP <- rownames(res.CD49avsDP)
+genes.res.CD49avsDP <- as.vector(genes.res.CD49avsDP)
+de.ihw.res.CD49avsDP["gene"] <- genes.res.CD49avsDP
+ihw.res.CD49avsDP.all <- de.ihw.res.CD49avsDP
+de.ihw.res.CD49avsDP <- de.ihw.res.CD49avsDP[de.ihw.res.CD49avsDP[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.CD49avsDP)
+ihw.genes.res.CD49avsDP <- de.ihw.res.CD49avsDP$gene
+head(ihw.genes.res.CD49avsDP)
+ihw.res.CD49avsDP.all <- data.frame(ihw.res.CD49avsDP.all, row.names = 8)
+ihw.res.CD49avsDP.all['log2FoldChange'] <- as.vector(res.CD49avsDP$log2FoldChange)
+#make set of genes that are up and down regulated
+ihw.genes.res.CD49avsDP.up <- ihw.res.CD49avsDP.all[ihw.res.CD49avsDP.all[,"log2FoldChange"]>1,]
+ihw.genes.res.CD49avsDP.up <- ihw.genes.res.CD49avsDP.up[ihw.genes.res.CD49avsDP.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.CD49avsDP.down <- ihw.res.CD49avsDP.all[ihw.res.CD49avsDP.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.CD49avsDP.down <- ihw.genes.res.CD49avsDP.down[ihw.genes.res.CD49avsDP.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.CD49avsDP <- rownames(ihw.genes.res.CD49avsDP.up)
+downgenes.ihw.res.CD49avsDP <- rownames(ihw.genes.res.CD49avsDP.down)
+
+#CD49avsDN
+de.ihw.res.CD49avsDN <- ihw.res.CD49avsDN@df
+dim(res.CD49avsDN)
+dim(de.ihw.res.CD49avsDN)
+genes.res.CD49avsDN <- rownames(res.CD49avsDN)
+genes.res.CD49avsDN <- as.vector(genes.res.CD49avsDN)
+de.ihw.res.CD49avsDN["gene"] <- genes.res.CD49avsDN
+ihw.res.CD49avsDN.all <- de.ihw.res.CD49avsDN
+de.ihw.res.CD49avsDN <- de.ihw.res.CD49avsDN[de.ihw.res.CD49avsDN[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.CD49avsDN)
+ihw.genes.res.CD49avsDN <- de.ihw.res.CD49avsDN$gene
+head(ihw.genes.res.CD49avsDN)
+ihw.res.CD49avsDN.all <- data.frame(ihw.res.CD49avsDN.all, row.names = 8)
+ihw.res.CD49avsDN.all['log2FoldChange'] <- as.vector(res.CD49avsDN$log2FoldChange)
+#make set of genes that are up and down regulated
+ihw.genes.res.CD49avsDN.up <- ihw.res.CD49avsDN.all[ihw.res.CD49avsDN.all[,"log2FoldChange"]>1,]
+ihw.genes.res.CD49avsDN.up <- ihw.genes.res.CD49avsDN.up[ihw.genes.res.CD49avsDN.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.CD49avsDN.down <- ihw.res.CD49avsDN.all[ihw.res.CD49avsDN.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.CD49avsDN.down <- ihw.genes.res.CD49avsDN.down[ihw.genes.res.CD49avsDN.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.CD49avsDN <- rownames(ihw.genes.res.CD49avsDN.up)
+downgenes.ihw.res.CD49avsDN <- rownames(ihw.genes.res.CD49avsDN.down)
+
+#DPvsDN
+de.ihw.res.DPvsDN <- ihw.res.DPvsDN@df
+dim(res.DPvsDN)
+dim(de.ihw.res.DPvsDN)
+genes.res.DPvsDN <- rownames(res.DPvsDN)
+genes.res.DPvsDN <- as.vector(genes.res.DPvsDN)
+de.ihw.res.DPvsDN["gene"] <- genes.res.DPvsDN
+ihw.res.DPvsDN.all <- de.ihw.res.DPvsDN
+de.ihw.res.DPvsDN <- de.ihw.res.DPvsDN[de.ihw.res.DPvsDN[,"weighted_pvalue"]<0.05,]
+dim(de.ihw.res.DPvsDN)
+ihw.genes.res.DPvsDN <- de.ihw.res.DPvsDN$gene
+head(ihw.genes.res.DPvsDN)
+ihw.res.DPvsDN.all <- data.frame(ihw.res.DPvsDN.all, row.names = 8)
+ihw.res.DPvsDN.all['log2FoldChange'] <- as.vector(res.DPvsDN$log2FoldChange)
+#make set of genes that are up and down regulated
+#ihw.genes.res.DPvsDN.up <- ihw.res.DPvsDN.all[ihw.res.DPvsDN.all[,"weighted_pvalue"]<.05,]
+ihw.genes.res.DPvsDN.up <- ihw.res.DPvsDN.all[ihw.res.DPvsDN.all[,"log2FoldChange"]>1,]
+ihw.genes.res.DPvsDN.up <- ihw.genes.res.DPvsDN.up[ihw.genes.res.DPvsDN.up[,"weighted_pvalue"]<0.05,]
+ihw.genes.res.DPvsDN.down <- ihw.res.DPvsDN.all[ihw.res.DPvsDN.all[,"log2FoldChange"]<(-1),]
+ihw.genes.res.DPvsDN.down <- ihw.genes.res.DPvsDN.down[ihw.genes.res.DPvsDN.down[,"weighted_pvalue"]<0.05,]
+upgenes.ihw.res.DPvsDN <- rownames(ihw.genes.res.DPvsDN.up)
+downgenes.ihw.res.DPvsDN <- rownames(ihw.genes.res.DPvsDN.down)
+```
+
+```{r}
+#sort by lfc
+orderedlfc <- ihw.res.DPvsDN.all[order(ihw.res.DPvsDN.all$log2FoldChange), ]
+head(orderedlfc)
+#keep only values of weighed p values of <.05
+orderedlfc<-orderedlfc[orderedlfc[,'weighted_pvalue']<.05,] 
+downorderedlfc<-orderedlfc[1:500,]
+orderedlfc <- orderedlfc[rev(seq_len(nrow(orderedlfc))), , drop = FALSE]
+uporderedlfc<-orderedlfc[1:500,]
+combinedlfc<-rbind(uporderedlfc,downorderedlfc)
+rownameslfc<-row.names(combinedlfc)
+highly_variable_lcpm <- logcounts[rownameslfc,]
+dim(highly_variable_lcpm)
+head(highly_variable_lcpm)
+as.data.frame(highly_variable_lcpm)
+type(highly_variable_lcpm)
+#reorder this
+highly_variable_lcpm <- highly_variable_lcpm[,c("L1_DP","L2_DP","L3_DP", "L2_CD49a","L3_CD49a","L1_CD103","L2_CD103","L3_CD103", "L1_DN", "L2_DN","L3_DN")]
+# Plot the heatmap
+mycols3 <-colorspace::sequential_hcl(5, "grays")
+heatmap.2(highly_variable_lcpm,col=viridis::plasma,trace="none",scale='row',Colv = F,labRow =F, labCol="", dendrogram = c('none'), Rowv=F,density.info = 'none',colsep=c(3,5,8), margin=c(10, 3), srtCol = 45, ColSideColors = c('#8744f6','#8744f6','#8744f6','#414141','#414141','#acfafa','#acfafa','#acfafa','#f29737','#f29737','#f29737'))
+```
+
+```{r}
+#write csvs of these results
+#downregulated
+write.csv(ihw.genes.res.CD103vsCD49a.down,'ihw.genes.res.CD103vsCD49a.down.csv')
+write.csv(ihw.genes.res.CD103vsDN.down,'ihw.genes.res.CD103vsDN.down.csv')
+write.csv(ihw.genes.res.CD103vsDP.down,'ihw.genes.res.CD103vsDP.down.csv')
+write.csv(ihw.genes.res.CD49avsDP.down,'ihw.genes.res.CD49avsDP.down.csv')
+write.csv(ihw.genes.res.CD49avsDN.down,'ihw.genes.res.CD49avsDN.down.csv')
+write.csv(ihw.genes.res.DPvsDN.down,'ihw.genes.res.DPvsDN.down.csv')
+
+#upregulated
+write.csv(ihw.genes.res.CD103vsCD49a.up,'ihw.genes.res.CD103vsCD49a.up.csv')
+write.csv(ihw.genes.res.CD103vsDN.up,'ihw.genes.res.CD103vsDN.up.csv')
+write.csv(ihw.genes.res.CD103vsDP.up,'ihw.genes.res.CD103vsDP.up.csv')
+write.csv(ihw.genes.res.CD49avsDP.up,'ihw.genes.res.CD49avsDP.up.csv')
+write.csv(ihw.genes.res.CD49avsDN.up,'ihw.genes.res.CD49avsDN.up.csv')
+write.csv(ihw.genes.res.DPvsDN.up,'ihw.genes.res.DPvsDN.up.csv')
+
+#all genes
+write.csv(ihw.res.CD103vsCD49a.all,'ihw.res.CD103vsCD49a.all.csv')
+write.csv(ihw.res.CD103vsDN.all,'ihw.res.CD103vsDN.all.csv')
+write.csv(ihw.res.CD103vsDP.all,'ihw.res.CD103vsDP.all.csv')
+write.csv(ihw.res.CD49avsDP.all,'ihw.res.CD49avsDP.all.csv')
+write.csv(ihw.res.CD49avsDN.all,'ihw.res.CD49avsDN.all.csv')
+write.csv(ihw.res.DPvsDN.all,'ihw.res.DPvsDN.all.csv')
+
+write.csv(ihw.res.DPvsDN.all,'ihw.res.DPvsDN.all.stim.4-14-21.csv')
+```
+
+```{r}
+#plot labeled volcano plots for all six comparisons
+library(EnhancedVolcano)
+viridispal4other<-c('#FDE725FF','#31688EFF','#35B779FF',"#440154FF")
+EnhancedVolcano(ihw.res.CD103vsCD49a.all,
+                lab = rownames(ihw.res.CD103vsCD49a.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'CD103 vs CD49a',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.3,) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+
+
+
+EnhancedVolcano(ihw.res.CD103vsDP.all,
+                lab = rownames(ihw.res.CD103vsDP.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'CD103 vs DP',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.2) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+
+
+EnhancedVolcano(ihw.res.CD103vsDN.all,
+                lab = rownames(ihw.res.CD103vsDN.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'CD103 vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.2) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+
+
+EnhancedVolcano(ihw.res.CD49avsDP.all,
+                lab = rownames(ihw.res.CD49avsDP.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'CD49a vs DP',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.2) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+
+
+
+EnhancedVolcano(ihw.res.CD49avsDN.all,
+                lab = rownames(ihw.res.CD49avsDN.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'CD49a vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.2) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+
+
+EnhancedVolcano(ihw.res.DPvsDN.all,
+                lab = rownames(ihw.res.DPvsDN.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'DP vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.2) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+
+```
+
+```{r}
+#plot a variety of other volcano plots
+library(EnhancedVolcano)
+viridispal4other<-c('#FDE725FF','#31688EFF','#35B779FF',"#440154FF")
+setone<-ihw.res.DPvsDN.all[c('Ifng','Tnf','Il2','Ccl1','Csf2','Prf','Gzma','Fasl'),]
+EnhancedVolcano(setone,
+                lab = rownames(setone),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                ylim = c(0, 300),
+                 xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'DP vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.8, #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+                selectLab = c('Ifng','Tnf','Il2','Ccl1','Csf2','Prf','Gzma','Fasl')) 
+
+EnhancedVolcano(ihw.res.DPvsDN.all,
+                lab = rownames(ihw.res.DPvsDN.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                ylim = c(0, 300),
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'DP vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=c('#d3d3d3','#d3d3d3','#d3d3d3','#d3d3d3'),
+                selectLab = c(''),
+                colAlpha = 0.1,) #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent) 
+
+
+
+EnhancedVolcano(ihw.res.DPvsDN.all,
+                lab = rownames(ihw.res.CD103vsCD49a.all),  #labels points with gene names
+                x = 'log2FoldChange',  #X and Y are based on column names from Res file
+                y = 'weighted_pvalue',
+                xlim = c(-8, 8),  #Play around with limits to make sure all your data fits, it doesn't indicate if a point is off scale
+                xlab = bquote(~Log[2]~ 'Fold Change'),  #X and Y manual labels
+                ylab = bquote(~-Log[10]~weighted~italic(P)),
+                title = 'DP vs DN',
+                FCcutoff = 1.0,
+                pointSize = 3.0,
+                labSize = 3.0,
+                subtitle='',
+                col=viridispal4other,
+                colAlpha = 0.3, #Sets transparency of points on volcano plot, 1=100%opaque, 0=100% transparent
+                selectLab = c('Ifng','Tnf','Il2','Ccl1','Csf2','Prf','Gzma','Fasl',"Csf1", 'Il10','Ccl3','Il21','Il17a','Cxcl9','Gzmb','Gzmc','Tnfsf10'))
+
+```
+
+
+```{r}
+#Enrichr
+#https://www.biostars.org/p/343196/
+library(enrichR)
+listEnrichrDbs()
+library(ggplot2)
+theme_set(theme_bw())  
+dbs <- listEnrichrDbs()
+alldbs <- listEnrichrDbs()
+dbs <- c( "GO_Biological_Process_2018" ,
+          "KEGG_2019_Mouse", 
+          "TRRUST_Transcription_Factors_2019",
+          'TRANSFAC_and_JASPAR_PWMs',
+          'Transcription_Factor_PPIs','Reactome_2016')
+db <- dbs
+viridispal2 <- viridis(n=2)
+
+
+#CD103vsCD49a
+
+list_up <- c(upgenes.ihw.res.CD103vsCD49a)
+list_down <- c(downgenes.ihw.res.CD103vsCD49a)
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "CD103 vs CD49a") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "CD103 vs CD49a") + 
+  coord_flip()
+          
+
+        #TRRUST
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "CD103 vs CD49a") + 
+  coord_flip()
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "CD103 vs CD49a") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "CD103 vs CD49a") + 
+  coord_flip()
+
+
+
+
+#CD103vsDP
+
+list_up <- c(upgenes.ihw.res.CD103vsDP)
+list_down <- c(downgenes.ihw.res.CD103vsDP)
+
+
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "CD103 vs DP") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "CD103 vs DP") + 
+  coord_flip()
+
+
+#TRRUST
+#THIS HAS NO UP OR DOWN REGULATED PATHWAYS 
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "CD103 vs DP") + 
+  coord_flip()
+
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "CD103 vs DP") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "CD103 vs DP") + 
+  coord_flip()
+
+
+
+
+#CD103vsDN
+
+list_up <- c(upgenes.ihw.res.CD103vsDN)
+list_down <- c(downgenes.ihw.res.CD103vsDN)
+
+
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "CD103 vs DN") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "CD103 vs DN") + 
+  coord_flip()
+
+#TRRUST
+
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "CD103 vs DN") + 
+  coord_flip()
+
+
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "CD103 vs DN") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "CD103 vs DN") + 
+  coord_flip()
+
+
+
+
+
+#CD49a vs DP
+
+list_up <- c(upgenes.ihw.res.CD49avsDP)
+list_down <- c(downgenes.ihw.res.CD49avsDP)
+
+
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "CD49a vs DP") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "CD49a vs DP") + 
+  coord_flip()
+
+
+
+#TRRUST
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "CD49a vs DP") + 
+  coord_flip()
+
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "CD49a vs DP") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+#up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "CD49a vs DP") + 
+  coord_flip()
+
+
+
+#CD49a vs DN
+
+list_up <- c(upgenes.ihw.res.CD49avsDN)
+list_down <- c(downgenes.ihw.res.CD49avsDN)
+
+
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "CD49a vs DN") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "CD49a vs DN") + 
+  coord_flip()
+
+
+
+#TRRUST
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "CD49a vs DN") + 
+  coord_flip()
+
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "CD49a vs DN") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "CD49a vs DN") + 
+  coord_flip()
+
+
+
+
+#DP vs DN
+
+list_up <- c(upgenes.ihw.res.DPvsDN)
+list_down <- c(downgenes.ihw.res.DPvsDN)
+
+
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+
+up <- eup$KEGG_2019_Mouse
+down <- edown$KEGG_2019_Mouse
+        #kegg
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Kegg pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+        #GO
+up <- eup$GO_Biological_Process_2018
+down <- edown$GO_Biological_Process_2018
+
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from GO pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+
+#TRRUST
+up <- eup$TRRUST_Transcription_Factors_2019
+down <- edown$TRRUST_Transcription_Factors_2019
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRRUST pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+
+
+        #TRANSFAC_and_JASPAR_PWMs
+up <- eup$TRANSFAC_and_JASPAR_PWMs
+down <- edown$TRANSFAC_and_JASPAR_PWMs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from TRANSFAC_and_JASPAR_PWMs pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+
+        #Transcription_Factor_PPIs
+up <- eup$Transcription_Factor_PPIs
+down <- edown$Transcription_Factor_PPIs
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Transcription_Factor_PPIs pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+
+
+  #Reactome
+up <- eup$Reactome_2016
+down <- edown$Reactome_2016
+up$type <- "up"
+down$type <- "down"
+up <- up[up$Adjusted.P.value<.05,]
+up <- up[order(up$Combined.Score), ]  # sort
+down <- down[down$Adjusted.P.value<0.05,]
+down <- down[order(down$Combined.Score), ]  # sort
+down$Combined.Score <- (-1) * down$Combined.Score
+gos <- rbind(down,up)
+gos <- na.omit(gos) # Diverging Barcharts
+ggplot(gos, aes(x=reorder(Term,Combined.Score), y=Combined.Score , label=Combined.Score)) + 
+  geom_bar(stat='identity', aes(fill=Adjusted.P.value), width=.5,position="dodge")  +
+  scale_fill_viridis() + 
+
+
+  labs(subtitle="Combined scores from Reactome_2016 pathways", 
+       title= "DP vs DN") + 
+  coord_flip()
+
+```
+
+```{r}
+#to write csvs of dp vs dn genes, we need to rewrite eup and edown as we did above
+list_up <- c(upgenes.ihw.res.DPvsDN)
+list_down <- c(downgenes.ihw.res.DPvsDN)
+eup <- enrichr(list_up, dbs)
+edown <- enrichr(list_down, dbs)
+#write csvs of the dp vs dn gene set enrichment analysies
+#up
+write.csv(eup$KEGG_2019_Mouse,'upkeggdpdn.csv')
+write.csv(eup$GO_Biological_Process_2018,'upgodpdn.csv')
+write.csv(eup$TRRUST_Transcription_Factors_2019,'uptrrustdpdn.csv')
+write.csv(eup$TRANSFAC_and_JASPAR_PWMs,'uptransfacdpdn.csv')
+write.csv(eup$Transcription_Factor_PPIs,'uptfppisdpdn.csv')
+write.csv(eup$Reactome_2016,'upreactomedpdn.csv')
+#down
+write.csv(edown$KEGG_2019_Mouse,'downkeggdpdn.csv')
+write.csv(edown$GO_Biological_Process_2018,'downgodpdn.csv')
+write.csv(edown$TRRUST_Transcription_Factors_2019,'downtrrustdpdn.csv')
+write.csv(edown$TRANSFAC_and_JASPAR_PWMs,'downtransfacdpdn.csv')
+write.csv(edown$Transcription_Factor_PPIs,'downtfppisdpdn.csv')
+write.csv(edown$Reactome_2016,'downreactomedpdn.csv')
+```
+
+```{r}
+#make venn diagram to look at upregulated genes. What number of genes are upregulated in which comparisons?
+library(VennDiagram)
+library(RColorBrewer)
+viridis3<-viridis(n=3)
+mycol <- c('#8744f6','#414141','#acfafa')
+# venn.diagram(x=list(upgenes.ihw.res.DPvsDN,upgenes.ihw.res.CD49avsDN,upgenes.ihw.res.CD103vsDN),
+#   category.names = c('','',''),
+#   filename='stimupregulatedvennfinal.png',
+#   output=T,  
+#          # Output features
+#         imagetype="png" ,
+#         height = 2000 , 
+#         width = 2000 , 
+#         resolution = 1200,
+#         compression = "lzw",
+#         
+#         # Circles
+#         lwd = 1,
+#         lty = c(1,1,1),
+#         fill = mycol,
+#   col=c('#222222','#222222','#222222'),
+#         alpha=c(.7,.8,.8),
+#         
+#         # Numbers
+#         cex = .6,
+#         fontface = "bold",
+#         fontfamily = "sans",
+#   )
+```
+
+```{r}
+## Examine plot of p-values to compare p value, adjusted p value, and weighted p value (Created b independent hypothesis testing. See above.)
+viridispal3 <- viridis(n=3)
+hist(res.CD103vsCD49aDF$pvalue, breaks=50, col="#440154FF")
+hist(res.CD103vsDPDF$pvalue, breaks=50, col="#440154FF")
+hist(res.CD103vsDNDF$pvalue, breaks=50, col="#440154FF")
+hist(res.CD49avsDPDF$pvalue, breaks=50, col="#440154FF")
+hist(res.CD49avsDNDF$pvalue, breaks=50, col="#440154FF")
+hist(res.DPvsDNDF$pvalue, breaks=50, col="#440154FF")
+
+hist(res.CD103vsCD49aDF$padj, breaks=50, col="#21908CFF")
+hist(res.CD103vsDPDF$padj, breaks=50, col="#21908CFF")
+hist(res.CD103vsDNDF$padj, breaks=50, col="#21908CFF")
+hist(res.CD49avsDPDF$padj, breaks=50, col="#21908CFF")
+hist(res.CD49avsDNDF$padj, breaks=50, col="#21908CFF")
+hist(res.DPvsDNDF$padj, breaks=50, col="#21908CFF")
+
+hist(ihw.res.CD103vsCD49a.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+hist(ihw.res.CD103vsDP.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+hist(ihw.res.CD103vsDN.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+hist(ihw.res.CD49avsDP.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+hist(ihw.res.CD49avsDN.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+hist(ihw.res.DPvsDN.all$weighted_pvalue, breaks=50, col="#FDE725FF")
+```
+
+```{r}
+#sessioninfo
+sessionInfo()
+```
+
+```{r}
+#citations, using a method as described in https://stackoverflow.com/questions/27535628/how-do-i-tell-which-r-packages-to-cite-in-my-paper 
+packages_in_use <- c( sessionInfo()$basePkgs, names( sessionInfo()$loadedOnly ) )
+the_citations_list <- lapply( X=packages_in_use, FUN=citation)
+the_citations_list
+
+sink(file='the_citation_list.txt')
+the_citations_list
+sink(file=NULL)
+```
+
+```{r}
+#FIN
+```
+

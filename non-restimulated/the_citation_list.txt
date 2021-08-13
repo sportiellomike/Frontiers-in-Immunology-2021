@@ -1,0 +1,2331 @@
+[[1]]
+
+The ‘grid’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[2]]
+
+The ‘parallel’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[3]]
+
+The ‘stats4’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[4]]
+
+The ‘stats’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[5]]
+
+The ‘graphics’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[6]]
+
+The ‘grDevices’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[7]]
+
+The ‘utils’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[8]]
+
+The ‘datasets’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[9]]
+
+The ‘methods’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[10]]
+
+To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[11]]
+
+To cite colorspace in publications use:
+
+Zeileis A, Fisher JC, Hornik K, Ihaka R, McWhite CD, Murrell P, Stauffer R, Wilke CO (2020).
+“colorspace: A Toolbox for Manipulating and Assessing Colors and Palettes.” _Journal of Statistical
+Software_, *96*(1), 1-49. doi: 10.18637/jss.v096.i01 (URL: https://doi.org/10.18637/jss.v096.i01).
+
+If you use HCL-based color palettes, please cite:
+
+Zeileis A, Hornik K, Murrell P (2009). “Escaping RGBland: Selecting Colors for Statistical
+Graphics.” _Computational Statistics \& Data Analysis_, *53*(9), 3259-3270. doi:
+10.1016/j.csda.2008.11.033 (URL: https://doi.org/10.1016/j.csda.2008.11.033).
+
+If you use HCL-based color palettes in meteorological visualizations, please cite:
+
+Stauffer R, Mayr GJ, Dabernig M, Zeileis A (2009). “Somewhere over the Rainbow: How to Make
+Effective Use of Colors in Meteorological Visualizations.” _Bulletin of the American Meteorological
+Society_, *96*(2), 203-216. doi: 10.1175/BAMS-D-13-00155.1 (URL:
+https://doi.org/10.1175/BAMS-D-13-00155.1).
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+[[12]]
+
+To cite package ‘rjson’ in publications use:
+
+  Alex Couture-Beil (2018). rjson: JSON for R. R package version 0.2.20.
+  https://CRAN.R-project.org/package=rjson
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {rjson: JSON for R},
+    author = {Alex Couture-Beil},
+    year = {2018},
+    note = {R package version 0.2.20},
+    url = {https://CRAN.R-project.org/package=rjson},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[13]]
+
+To cite 'ggsignif' in publications use:
+
+  Ahlmann-Eltze, C., & Patil, I. (2021). ggsignif: R Package for Displaying Significance Brackets
+  for 'ggplot2'. PsyArxiv. doi:10.31234/osf.io/7awm6
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {{ggsignif}: R Package for Displaying Significance Brackets for {'ggplot2'}},
+    author = {Ahlmann-Eltze Constantin and Indrajeet Patil},
+    year = {2021},
+    journal = {PsyArxiv},
+    url = {https://psyarxiv.com/7awm6},
+    doi = {10.31234/osf.io/7awm6},
+  }
+
+
+[[14]]
+
+To cite package ‘ellipsis’ in publications use:
+
+  Hadley Wickham (2021). ellipsis: Tools for Working with .... R package version 0.3.2.
+  https://CRAN.R-project.org/package=ellipsis
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {ellipsis: Tools for Working with ...},
+    author = {Hadley Wickham},
+    year = {2021},
+    note = {R package version 0.3.2},
+    url = {https://CRAN.R-project.org/package=ellipsis},
+  }
+
+
+[[15]]
+
+To cite package 'rio' in publications use:
+
+  Chung-hong Chan, Geoffrey CH Chan, Thomas J. Leeper, and Jason Becker (2021). rio: A Swiss-army
+  knife for data file I/O. R package version 0.5.27.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {rio: A Swiss-army knife for data file I/O},
+    author = {Chung-hong Chan and Geoffrey CH Chan and Thomas J. Leeper and Jason Becker},
+    year = {2021},
+    note = {R package version 0.5.27},
+  }
+
+
+[[16]]
+
+To cite package ‘XVector’ in publications use:
+
+  Hervé Pagès and Patrick Aboyoun (2020). XVector: Foundation of external vector representation and
+  manipulation in Bioconductor. R package version 0.30.0. https://bioconductor.org/packages/XVector
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {XVector: Foundation of external vector representation and manipulation in
+Bioconductor},
+    author = {Hervé Pagès and Patrick Aboyoun},
+    year = {2020},
+    note = {R package version 0.30.0},
+    url = {https://bioconductor.org/packages/XVector},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[17]]
+
+To cite package ‘farver’ in publications use:
+
+  Thomas Lin Pedersen, Berendea Nicolae and Romain François (2021). farver: High Performance Colour
+  Space Manipulation. R package version 2.1.0. https://CRAN.R-project.org/package=farver
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {farver: High Performance Colour Space Manipulation},
+    author = {Thomas Lin Pedersen and Berendea Nicolae and Romain François},
+    year = {2021},
+    note = {R package version 2.1.0},
+    url = {https://CRAN.R-project.org/package=farver},
+  }
+
+
+[[18]]
+
+To cite package ‘ggrepel’ in publications use:
+
+  Kamil Slowikowski (2021). ggrepel: Automatically Position Non-Overlapping Text Labels with
+  'ggplot2'. R package version 0.9.1. https://CRAN.R-project.org/package=ggrepel
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {ggrepel: Automatically Position Non-Overlapping Text Labels with
+'ggplot2'},
+    author = {Kamil Slowikowski},
+    year = {2021},
+    note = {R package version 0.9.1},
+    url = {https://CRAN.R-project.org/package=ggrepel},
+  }
+
+
+[[19]]
+
+To cite package ‘DT’ in publications use:
+
+  Yihui Xie, Joe Cheng and Xianying Tan (2021). DT: A Wrapper of the JavaScript Library
+  'DataTables'. R package version 0.18. https://CRAN.R-project.org/package=DT
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {DT: A Wrapper of the JavaScript Library 'DataTables'},
+    author = {Yihui Xie and Joe Cheng and Xianying Tan},
+    year = {2021},
+    note = {R package version 0.18},
+    url = {https://CRAN.R-project.org/package=DT},
+  }
+
+
+[[20]]
+
+To cite package ‘bit64’ in publications use:
+
+  Jens Oehlschlägel and Leonardo Silvestri (2020). bit64: A S3 Class for Vectors of 64bit Integers.
+  R package version 4.0.5. https://CRAN.R-project.org/package=bit64
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {bit64: A S3 Class for Vectors of 64bit Integers},
+    author = {Jens Oehlschlägel and Leonardo Silvestri},
+    year = {2020},
+    note = {R package version 4.0.5},
+    url = {https://CRAN.R-project.org/package=bit64},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[21]]
+
+To cite package ‘AnnotationDbi’ in publications use:
+
+  Hervé Pagès, Marc Carlson, Seth Falcon and Nianhua Li (2020). AnnotationDbi: Manipulation of
+  SQLite-based annotations in Bioconductor. R package version 1.52.0.
+  https://bioconductor.org/packages/AnnotationDbi
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {AnnotationDbi: Manipulation of SQLite-based annotations in Bioconductor},
+    author = {Hervé Pagès and Marc Carlson and Seth Falcon and Nianhua Li},
+    year = {2020},
+    note = {R package version 1.52.0},
+    url = {https://bioconductor.org/packages/AnnotationDbi},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[22]]
+
+To cite package ‘fansi’ in publications use:
+
+  Brodie Gaslam (2021). fansi: ANSI Control Sequence Aware String Functions. R package version
+  0.5.0. https://CRAN.R-project.org/package=fansi
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {fansi: ANSI Control Sequence Aware String Functions},
+    author = {Brodie Gaslam},
+    year = {2021},
+    note = {R package version 0.5.0},
+    url = {https://CRAN.R-project.org/package=fansi},
+  }
+
+
+[[23]]
+
+The ‘splines’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[24]]
+
+To cite package ‘leaps’ in publications use:
+
+  Thomas Lumley based on Fortran code by Alan Miller (2020). leaps: Regression Subset Selection. R
+  package version 3.1. https://CRAN.R-project.org/package=leaps
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {leaps: Regression Subset Selection},
+    author = {Thomas Lumley based on Fortran code by Alan Miller},
+    year = {2020},
+    note = {R package version 3.1},
+    url = {https://CRAN.R-project.org/package=leaps},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[25]]
+
+To cite package ‘cachem’ in publications use:
+
+  Winston Chang (2021). cachem: Cache R Objects with Automatic Pruning. R package version 1.0.5.
+  https://CRAN.R-project.org/package=cachem
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {cachem: Cache R Objects with Automatic Pruning},
+    author = {Winston Chang},
+    year = {2021},
+    note = {R package version 1.0.5},
+    url = {https://CRAN.R-project.org/package=cachem},
+  }
+
+
+[[26]]
+
+To cite package ‘geneplotter’ in publications use:
+
+  R. Gentleman and Biocore (2020). geneplotter: Graphics related functions for Bioconductor. R
+  package version 1.68.0.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {geneplotter: Graphics related functions for Bioconductor},
+    author = {R. Gentleman and {Biocore}},
+    year = {2020},
+    note = {R package version 1.68.0},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[27]]
+
+To cite the 'knitr' package in publications use:
+
+  Yihui Xie (2021). knitr: A General-Purpose Package for Dynamic Report Generation in R. R package
+  version 1.33.
+
+  Yihui Xie (2015) Dynamic Documents with R and knitr. 2nd edition. Chapman and Hall/CRC. ISBN
+  978-1498716963
+
+  Yihui Xie (2014) knitr: A Comprehensive Tool for Reproducible Research in R. In Victoria Stodden,
+  Friedrich Leisch and Roger D. Peng, editors, Implementing Reproducible Computational Research.
+  Chapman and Hall/CRC. ISBN 978-1466561595
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+[[28]]
+
+To cite jsonlite in publications use:
+
+  Jeroen Ooms (2014). The jsonlite Package: A Practical and Consistent Mapping Between JSON Data
+  and R Objects. arXiv:1403.2805 [stat.CO] URL https://arxiv.org/abs/1403.2805.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {The jsonlite Package: A Practical and Consistent Mapping Between JSON Data and R Objects},
+    author = {Jeroen Ooms},
+    journal = {arXiv:1403.2805 [stat.CO]},
+    year = {2014},
+    url = {https://arxiv.org/abs/1403.2805},
+  }
+
+
+[[29]]
+
+To cite package ‘packrat’ in publications use:
+
+  Kevin Ushey, Jonathan McPherson, Joe Cheng, Aron Atkins and JJ Allaire (2021). packrat: A
+  Dependency Management System for Projects and their R Package Dependencies. R package version
+  0.6.0. https://CRAN.R-project.org/package=packrat
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {packrat: A Dependency Management System for Projects and their R Package
+Dependencies},
+    author = {Kevin Ushey and Jonathan McPherson and Joe Cheng and Aron Atkins and JJ Allaire},
+    year = {2021},
+    note = {R package version 0.6.0},
+    url = {https://CRAN.R-project.org/package=packrat},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[30]]
+
+To cite package ‘broom’ in publications use:
+
+  David Robinson, Alex Hayes and Simon Couch (2021). broom: Convert Statistical Objects into Tidy
+  Tibbles. R package version 0.7.9. https://CRAN.R-project.org/package=broom
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {broom: Convert Statistical Objects into Tidy Tibbles},
+    author = {David Robinson and Alex Hayes and Simon Couch},
+    year = {2021},
+    note = {R package version 0.7.9},
+    url = {https://CRAN.R-project.org/package=broom},
+  }
+
+
+[[31]]
+
+To cite package ‘annotate’ in publications use:
+
+  R. Gentleman (2020). annotate: Annotation for microarrays. R package version 1.68.0.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {annotate: Annotation for microarrays},
+    author = {R. Gentleman},
+    year = {2020},
+    note = {R package version 1.68.0},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[32]]
+
+To cite the R package 'cluster' in publications use:
+
+  Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2021).  cluster: Cluster Analysis
+  Basics and Extensions. R package version 2.1.1.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {cluster: Cluster Analysis Basics and Extensions},
+    author = {Martin Maechler and Peter Rousseeuw and Anja Struyf and Mia Hubert and Kurt Hornik},
+    year = {2021},
+    url = {https://CRAN.R-project.org/package=cluster},
+    note = {R package version 2.1.1 --- For new features, see the 'Changelog' file (in the package source)},
+  }
+
+
+[[33]]
+
+The ‘compiler’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[34]]
+
+To cite package ‘httr’ in publications use:
+
+  Hadley Wickham (2020). httr: Tools for Working with URLs and HTTP. R package version 1.4.2.
+  https://CRAN.R-project.org/package=httr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {httr: Tools for Working with URLs and HTTP},
+    author = {Hadley Wickham},
+    year = {2020},
+    note = {R package version 1.4.2},
+    url = {https://CRAN.R-project.org/package=httr},
+  }
+
+
+[[35]]
+
+To cite package ‘backports’ in publications use:
+
+  Michel Lang and R Core Team (2020). backports: Reimplementations of Functions Introduced Since
+  R-3.0.0. R package version 1.2.1. https://CRAN.R-project.org/package=backports
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {backports: Reimplementations of Functions Introduced Since R-3.0.0},
+    author = {Michel Lang and {R Core Team}},
+    year = {2020},
+    note = {R package version 1.2.1},
+    url = {https://CRAN.R-project.org/package=backports},
+  }
+
+
+[[36]]
+
+To cite package ‘assertthat’ in publications use:
+
+  Hadley Wickham (2019). assertthat: Easy Pre and Post Assertions. R package version 0.2.1.
+  https://CRAN.R-project.org/package=assertthat
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {assertthat: Easy Pre and Post Assertions},
+    author = {Hadley Wickham},
+    year = {2019},
+    note = {R package version 0.2.1},
+    url = {https://CRAN.R-project.org/package=assertthat},
+  }
+
+
+[[37]]
+
+To cite package ‘Matrix’ in publications use:
+
+  Douglas Bates and Martin Maechler (2021). Matrix: Sparse and Dense Matrix Classes and Methods. R
+  package version 1.3-2. https://CRAN.R-project.org/package=Matrix
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {Matrix: Sparse and Dense Matrix Classes and Methods},
+    author = {Douglas Bates and Martin Maechler},
+    year = {2021},
+    note = {R package version 1.3-2},
+    url = {https://CRAN.R-project.org/package=Matrix},
+  }
+
+
+[[38]]
+
+To cite package ‘fastmap’ in publications use:
+
+  Winston Chang (2021). fastmap: Fast Data Structures. R package version 1.1.0.
+  https://CRAN.R-project.org/package=fastmap
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {fastmap: Fast Data Structures},
+    author = {Winston Chang},
+    year = {2021},
+    note = {R package version 1.1.0},
+    url = {https://CRAN.R-project.org/package=fastmap},
+  }
+
+
+[[39]]
+
+To cite package ‘formatR’ in publications use:
+
+  Yihui Xie (2021). formatR: Format R Code Automatically. R package version 1.11.
+  https://CRAN.R-project.org/package=formatR
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {formatR: Format R Code Automatically},
+    author = {Yihui Xie},
+    year = {2021},
+    note = {R package version 1.11},
+    url = {https://CRAN.R-project.org/package=formatR},
+  }
+
+
+[[40]]
+
+To cite package ‘htmltools’ in publications use:
+
+  Joe Cheng, Carson Sievert, Winston Chang, Yihui Xie and Jeff Allen (2021). htmltools: Tools for
+  HTML. R package version 0.5.1.1. https://CRAN.R-project.org/package=htmltools
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {htmltools: Tools for HTML},
+    author = {Joe Cheng and Carson Sievert and Winston Chang and Yihui Xie and Jeff Allen},
+    year = {2021},
+    note = {R package version 0.5.1.1},
+    url = {https://CRAN.R-project.org/package=htmltools},
+  }
+
+
+[[41]]
+
+The ‘tools’ package is part of R.  To cite R in publications use:
+
+  R Core Team (2021). R: A language and environment for statistical computing. R Foundation for
+  Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2021},
+    url = {https://www.R-project.org/},
+  }
+
+We have invested a lot of time and effort in creating R, please cite it when using it for data
+analysis. See also ‘citation("pkgname")’ for citing R packages.
+
+
+[[42]]
+
+To cite package ‘gtable’ in publications use:
+
+  Hadley Wickham and Thomas Lin Pedersen (2019). gtable: Arrange 'Grobs' in Tables. R package
+  version 0.3.0. https://CRAN.R-project.org/package=gtable
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {gtable: Arrange 'Grobs' in Tables},
+    author = {Hadley Wickham and Thomas Lin Pedersen},
+    year = {2019},
+    note = {R package version 0.3.0},
+    url = {https://CRAN.R-project.org/package=gtable},
+  }
+
+
+[[43]]
+
+To cite package ‘glue’ in publications use:
+
+  Jim Hester (2020). glue: Interpreted String Literals. R package version 1.4.2.
+  https://CRAN.R-project.org/package=glue
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {glue: Interpreted String Literals},
+    author = {Jim Hester},
+    year = {2020},
+    note = {R package version 1.4.2},
+    url = {https://CRAN.R-project.org/package=glue},
+  }
+
+
+[[44]]
+
+To cite package ‘GenomeInfoDbData’ in publications use:
+
+  Bioconductor Core Team (2020). GenomeInfoDbData: Species and taxonomy ID look up tables used by
+  GenomeInfoDb. R package version 1.2.4.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {GenomeInfoDbData: Species and taxonomy ID look up tables used by GenomeInfoDb},
+    author = {Bioconductor Core Team},
+    year = {2020},
+    note = {R package version 1.2.4},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[45]]
+
+To cite Rcpp in publications use:
+
+  Dirk Eddelbuettel and Romain Francois (2011). Rcpp: Seamless R and C++ Integration. Journal of
+  Statistical Software, 40(8), 1-18. URL https://www.jstatsoft.org/v40/i08/.
+
+  Eddelbuettel, Dirk (2013) Seamless R and C++ Integration with Rcpp. Springer, New York. ISBN
+  978-1-4614-6867-7.
+
+  Dirk Eddelbuettel and James Joseph Balamuta (2018). Extending R with C++: A Brief Introduction to
+  Rcpp. The American Statistician. 72(1). URL https://doi.org/10.1080/00031305.2017.1375990.
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+[[46]]
+
+To cite package ‘slam’ in publications use:
+
+  Kurt Hornik, David Meyer and Christian Buchta (2020). slam: Sparse Lightweight Arrays and
+  Matrices. R package version 0.1-48. https://CRAN.R-project.org/package=slam
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {slam: Sparse Lightweight Arrays and Matrices},
+    author = {Kurt Hornik and David Meyer and Christian Buchta},
+    year = {2020},
+    note = {R package version 0.1-48},
+    url = {https://CRAN.R-project.org/package=slam},
+  }
+
+
+[[47]]
+
+To cite package ‘carData’ in publications use:
+
+  John Fox, Sanford Weisberg and Brad Price (2020). carData: Companion to Applied Regression Data
+  Sets. R package version 3.0-4. https://CRAN.R-project.org/package=carData
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {carData: Companion to Applied Regression Data Sets},
+    author = {John Fox and Sanford Weisberg and Brad Price},
+    year = {2020},
+    note = {R package version 3.0-4},
+    url = {https://CRAN.R-project.org/package=carData},
+  }
+
+
+[[48]]
+
+To cite package ‘jquerylib’ in publications use:
+
+  Carson Sievert and Joe Cheng (2021). jquerylib: Obtain 'jQuery' as an HTML Dependency Object. R
+  package version 0.1.4. https://CRAN.R-project.org/package=jquerylib
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {jquerylib: Obtain 'jQuery' as an HTML Dependency Object},
+    author = {Carson Sievert and Joe Cheng},
+    year = {2021},
+    note = {R package version 0.1.4},
+    url = {https://CRAN.R-project.org/package=jquerylib},
+  }
+
+
+[[49]]
+
+To cite package ‘cellranger’ in publications use:
+
+  Jennifer Bryan (2016). cellranger: Translate Spreadsheet Cell Ranges to Rows and Columns. R
+  package version 1.1.0. https://CRAN.R-project.org/package=cellranger
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {cellranger: Translate Spreadsheet Cell Ranges to Rows and Columns},
+    author = {Jennifer Bryan},
+    year = {2016},
+    note = {R package version 1.1.0},
+    url = {https://CRAN.R-project.org/package=cellranger},
+  }
+
+
+[[50]]
+
+To cite package ‘vctrs’ in publications use:
+
+  Hadley Wickham, Lionel Henry and Davis Vaughan (2021). vctrs: Vector Helpers. R package version
+  0.3.8. https://CRAN.R-project.org/package=vctrs
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {vctrs: Vector Helpers},
+    author = {Hadley Wickham and Lionel Henry and Davis Vaughan},
+    year = {2021},
+    note = {R package version 0.3.8},
+    url = {https://CRAN.R-project.org/package=vctrs},
+  }
+
+
+[[51]]
+
+To cite package ‘stringr’ in publications use:
+
+  Hadley Wickham (2019). stringr: Simple, Consistent Wrappers for Common String Operations. R
+  package version 1.4.0. https://CRAN.R-project.org/package=stringr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {stringr: Simple, Consistent Wrappers for Common String Operations},
+    author = {Hadley Wickham},
+    year = {2019},
+    note = {R package version 1.4.0},
+    url = {https://CRAN.R-project.org/package=stringr},
+  }
+
+
+[[52]]
+
+To cite package ‘xfun’ in publications use:
+
+  Yihui Xie (2021). xfun: Supporting Functions for Packages Maintained by 'Yihui Xie'. R package
+  version 0.24. https://CRAN.R-project.org/package=xfun
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {xfun: Supporting Functions for Packages Maintained by 'Yihui Xie'},
+    author = {Yihui Xie},
+    year = {2021},
+    note = {R package version 0.24},
+    url = {https://CRAN.R-project.org/package=xfun},
+  }
+
+
+[[53]]
+
+To cite package ‘openxlsx’ in publications use:
+
+  Philipp Schauberger and Alexander Walker (2021). openxlsx: Read, Write and Edit xlsx Files. R
+  package version 4.2.4. https://CRAN.R-project.org/package=openxlsx
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {openxlsx: Read, Write and Edit xlsx Files},
+    author = {Philipp Schauberger and Alexander Walker},
+    year = {2021},
+    note = {R package version 4.2.4},
+    url = {https://CRAN.R-project.org/package=openxlsx},
+  }
+
+
+[[54]]
+
+To cite package ‘irlba’ in publications use:
+
+  Jim Baglama, Lothar Reichel and B. W. Lewis (2019). irlba: Fast Truncated Singular Value
+  Decomposition and Principal Components Analysis for Large Dense and Sparse Matrices. R package
+  version 2.3.3. https://CRAN.R-project.org/package=irlba
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {irlba: Fast Truncated Singular Value Decomposition and Principal
+Components Analysis for Large Dense and Sparse Matrices},
+    author = {Jim Baglama and Lothar Reichel and B. W. Lewis},
+    year = {2019},
+    note = {R package version 2.3.3},
+    url = {https://CRAN.R-project.org/package=irlba},
+  }
+
+
+[[55]]
+
+To cite package ‘lifecycle’ in publications use:
+
+  Lionel Henry and Hadley Wickham (2021). lifecycle: Manage the Life Cycle of your Package
+  Functions. R package version 1.0.0. https://CRAN.R-project.org/package=lifecycle
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {lifecycle: Manage the Life Cycle of your Package Functions},
+    author = {Lionel Henry and Hadley Wickham},
+    year = {2021},
+    note = {R package version 1.0.0},
+    url = {https://CRAN.R-project.org/package=lifecycle},
+  }
+
+
+[[56]]
+
+To cite package ‘gtools’ in publications use:
+
+  Gregory R. Warnes, Ben Bolker and Thomas Lumley (2021). gtools: Various R Programming Tools. R
+  package version 3.9.2. https://CRAN.R-project.org/package=gtools
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {gtools: Various R Programming Tools},
+    author = {Gregory R. Warnes and Ben Bolker and Thomas Lumley},
+    year = {2021},
+    note = {R package version 3.9.2},
+    url = {https://CRAN.R-project.org/package=gtools},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[57]]
+
+To cite package ‘rstatix’ in publications use:
+
+  Alboukadel Kassambara (2021). rstatix: Pipe-Friendly Framework for Basic Statistical Tests. R
+  package version 0.7.0. https://CRAN.R-project.org/package=rstatix
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {rstatix: Pipe-Friendly Framework for Basic Statistical Tests},
+    author = {Alboukadel Kassambara},
+    year = {2021},
+    note = {R package version 0.7.0},
+    url = {https://CRAN.R-project.org/package=rstatix},
+  }
+
+
+[[58]]
+
+To cite package ‘XML’ in publications use:
+
+  Duncan Temple Lang (2021). XML: Tools for Parsing and Generating XML Within R and S-Plus. R
+  package version 3.99-0.6. https://CRAN.R-project.org/package=XML
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {XML: Tools for Parsing and Generating XML Within R and S-Plus},
+    author = {Duncan {Temple Lang}},
+    year = {2021},
+    note = {R package version 3.99-0.6},
+    url = {https://CRAN.R-project.org/package=XML},
+  }
+
+
+[[59]]
+
+To cite package ‘zlibbioc’ in publications use:
+
+  Martin Morgan (2020). zlibbioc: An R packaged zlib-1.2.5. R package version 1.36.0.
+  https://bioconductor.org/packages/zlibbioc
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {zlibbioc: An R packaged zlib-1.2.5},
+    author = {Martin Morgan},
+    year = {2020},
+    note = {R package version 1.36.0},
+    url = {https://bioconductor.org/packages/zlibbioc},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[60]]
+
+To cite the MASS package in publications use:
+
+  Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth Edition.
+  Springer, New York. ISBN 0-387-95457-0
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    title = {Modern Applied Statistics with S},
+    author = {W. N. Venables and B. D. Ripley},
+    publisher = {Springer},
+    edition = {Fourth},
+    address = {New York},
+    year = {2002},
+    note = {ISBN 0-387-95457-0},
+    url = {https://www.stats.ox.ac.uk/pub/MASS4/},
+  }
+
+
+[[61]]
+
+To cite package ‘scales’ in publications use:
+
+  Hadley Wickham and Dana Seidel (2020). scales: Scale Functions for Visualization. R package
+  version 1.1.1. https://CRAN.R-project.org/package=scales
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {scales: Scale Functions for Visualization},
+    author = {Hadley Wickham and Dana Seidel},
+    year = {2020},
+    note = {R package version 1.1.1},
+    url = {https://CRAN.R-project.org/package=scales},
+  }
+
+
+[[62]]
+
+To cite package ‘hms’ in publications use:
+
+  Kirill Müller (2021). hms: Pretty Time of Day. R package version 1.1.0.
+  https://CRAN.R-project.org/package=hms
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {hms: Pretty Time of Day},
+    author = {Kirill Müller},
+    year = {2021},
+    note = {R package version 1.1.0},
+    url = {https://CRAN.R-project.org/package=hms},
+  }
+
+
+[[63]]
+
+To cite package ‘lambda.r’ in publications use:
+
+  Brian Lee Yung Rowe (2019). lambda.r: Modeling Data with Functional Programming. R package
+  version 1.2.4. https://CRAN.R-project.org/package=lambda.r
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {lambda.r: Modeling Data with Functional Programming},
+    author = {Brian Lee Yung Rowe},
+    year = {2019},
+    note = {R package version 1.2.4},
+    url = {https://CRAN.R-project.org/package=lambda.r},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[64]]
+
+To cite package ‘yaml’ in publications use:
+
+  Jeremy Stephens, Kirill Simonov, Yihui Xie, Zhuoer Dong, Hadley Wickham, Jeffrey Horner, reikoch,
+  Will Beasley, Brendan O'Connor and Gregory R. Warnes (2020). yaml: Methods to Convert R Data to
+  YAML and Back. R package version 2.2.1. https://CRAN.R-project.org/package=yaml
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {yaml: Methods to Convert R Data to YAML and Back},
+    author = {Jeremy Stephens and Kirill Simonov and Yihui Xie and Zhuoer Dong and Hadley Wickham and Jeffrey Horner and {reikoch} and Will Beasley and Brendan O'Connor and Gregory R. Warnes},
+    year = {2020},
+    note = {R package version 2.2.1},
+    url = {https://CRAN.R-project.org/package=yaml},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[65]]
+
+To cite package ‘curl’ in publications use:
+
+  Jeroen Ooms (2021). curl: A Modern and Flexible Web Client for R. R package version 4.3.2.
+  https://CRAN.R-project.org/package=curl
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {curl: A Modern and Flexible Web Client for R},
+    author = {Jeroen Ooms},
+    year = {2021},
+    note = {R package version 4.3.2},
+    url = {https://CRAN.R-project.org/package=curl},
+  }
+
+
+[[66]]
+
+To cite package ‘memoise’ in publications use:
+
+  Hadley Wickham, Jim Hester, Winston Chang, Kirill Müller and Daniel Cook (2021). memoise:
+  Memoisation of Functions. R package version 2.0.0. https://CRAN.R-project.org/package=memoise
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {memoise: Memoisation of Functions},
+    author = {Hadley Wickham and Jim Hester and Winston Chang and Kirill Müller and Daniel Cook},
+    year = {2021},
+    note = {R package version 2.0.0},
+    url = {https://CRAN.R-project.org/package=memoise},
+  }
+
+
+[[67]]
+
+To cite package ‘gridExtra’ in publications use:
+
+  Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid" Graphics. R package version
+  2.3. https://CRAN.R-project.org/package=gridExtra
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {gridExtra: Miscellaneous Functions for "Grid" Graphics},
+    author = {Baptiste Auguie},
+    year = {2017},
+    note = {R package version 2.3},
+    url = {https://CRAN.R-project.org/package=gridExtra},
+  }
+
+
+[[68]]
+
+To cite package ‘sass’ in publications use:
+
+  Joe Cheng, Timothy Mastny, Richard Iannone, Barret Schloerke and Carson Sievert (2021). sass:
+  Syntactically Awesome Style Sheets ('Sass'). R package version 0.4.0.
+  https://CRAN.R-project.org/package=sass
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {sass: Syntactically Awesome Style Sheets ('Sass')},
+    author = {Joe Cheng and Timothy Mastny and Richard Iannone and Barret Schloerke and Carson Sievert},
+    year = {2021},
+    note = {R package version 0.4.0},
+    url = {https://CRAN.R-project.org/package=sass},
+  }
+
+
+[[69]]
+
+To cite SQUAREM in publications use:
+
+Du Y, Varadhan R (2020). “SQUAREM: An R Package for Off-the-Shelf Acceleration of EM, MM and Other
+EM-Like Monotone Algorithms.” _Journal of Statistical Software_, *92*(7), 1-41. doi:
+10.18637/jss.v092.i07 (URL: https://doi.org/10.18637/jss.v092.i07).
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {{SQUAREM}: An {R} Package for Off-the-Shelf Acceleration of {EM}, {MM} and Other {EM}-Like Monotone Algorithms},
+    author = {Yu Du and Ravi Varadhan},
+    journal = {Journal of Statistical Software},
+    year = {2020},
+    volume = {92},
+    number = {7},
+    pages = {1--41},
+    doi = {10.18637/jss.v092.i07},
+  }
+
+
+[[70]]
+
+Gagolewski M (2021). _stringi: Fast and portable character string processing in R_. R package
+version 1.7.3, <URL: https://stringi.gagolewski.com/>.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {stringi: Fast and portable character string processing in R},
+    author = {Marek Gagolewski},
+    year = {2021},
+    note = {R package version 1.7.3},
+    url = {https://stringi.gagolewski.com/},
+  }
+
+
+[[71]]
+
+To cite package ‘RSQLite’ in publications use:
+
+  Kirill Müller, Hadley Wickham, David A. James and Seth Falcon (2021). RSQLite: 'SQLite' Interface
+  for R. R package version 2.2.7. https://CRAN.R-project.org/package=RSQLite
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {RSQLite: 'SQLite' Interface for R},
+    author = {Kirill Müller and Hadley Wickham and David A. James and Seth Falcon},
+    year = {2021},
+    note = {R package version 2.2.7},
+    url = {https://CRAN.R-project.org/package=RSQLite},
+  }
+
+
+[[72]]
+
+To cite package ‘genefilter’ in publications use:
+
+  R. Gentleman, V. Carey, W. Huber and F. Hahne (2021). genefilter: genefilter: methods for
+  filtering genes from high-throughput experiments. R package version 1.72.1.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {genefilter: genefilter: methods for filtering genes from high-throughput
+experiments},
+    author = {R. Gentleman and V. Carey and W. Huber and F. Hahne},
+    year = {2021},
+    note = {R package version 1.72.1},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[73]]
+
+To cite package ‘caTools’ in publications use:
+
+  Jarek Tuszynski (2021). caTools: Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc. R
+  package version 1.18.2. https://CRAN.R-project.org/package=caTools
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {caTools: Tools: Moving Window Statistics, GIF, Base64, ROC AUC, etc},
+    author = {Jarek Tuszynski},
+    year = {2021},
+    note = {R package version 1.18.2},
+    url = {https://CRAN.R-project.org/package=caTools},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[74]]
+
+To cite package ‘zip’ in publications use:
+
+  Gábor Csárdi, Kuba Podgórski and Rich Geldreich (2021). zip: Cross-Platform 'zip' Compression. R
+  package version 2.2.0. https://CRAN.R-project.org/package=zip
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {zip: Cross-Platform 'zip' Compression},
+    author = {Gábor Csárdi and Kuba Podgórski and Rich Geldreich},
+    year = {2021},
+    note = {R package version 2.2.0},
+    url = {https://CRAN.R-project.org/package=zip},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[75]]
+
+To cite package ‘BiocParallel’ in publications use:
+
+  Martin Morgan, Valerie Obenchain, Michel Lang, Ryan Thompson and Nitesh Turaga (2020).
+  BiocParallel: Bioconductor facilities for parallel evaluation. R package version 1.24.1.
+  https://github.com/Bioconductor/BiocParallel
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {BiocParallel: Bioconductor facilities for parallel evaluation},
+    author = {Martin Morgan and Valerie Obenchain and Michel Lang and Ryan Thompson and Nitesh Turaga},
+    year = {2020},
+    note = {R package version 1.24.1},
+    url = {https://github.com/Bioconductor/BiocParallel},
+  }
+
+
+[[76]]
+
+To cite package ‘truncnorm’ in publications use:
+
+  Olaf Mersmann, Heike Trautmann, Detlef Steuer and Björn Bornkamp (2018). truncnorm: Truncated
+  Normal Distribution. R package version 1.0-8. https://CRAN.R-project.org/package=truncnorm
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {truncnorm: Truncated Normal Distribution},
+    author = {Olaf Mersmann and Heike Trautmann and Detlef Steuer and Björn Bornkamp},
+    year = {2018},
+    note = {R package version 1.0-8},
+    url = {https://CRAN.R-project.org/package=truncnorm},
+  }
+
+
+[[77]]
+
+To cite package ‘rlang’ in publications use:
+
+  Lionel Henry and Hadley Wickham (2021). rlang: Functions for Base Types and Core R and
+  'Tidyverse' Features. R package version 0.4.11. https://CRAN.R-project.org/package=rlang
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {rlang: Functions for Base Types and Core R and 'Tidyverse' Features},
+    author = {Lionel Henry and Hadley Wickham},
+    year = {2021},
+    note = {R package version 0.4.11},
+    url = {https://CRAN.R-project.org/package=rlang},
+  }
+
+
+[[78]]
+
+To cite package ‘pkgconfig’ in publications use:
+
+  Gábor Csárdi (2019). pkgconfig: Private Configuration for 'R' Packages. R package version 2.0.3.
+  https://CRAN.R-project.org/package=pkgconfig
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {pkgconfig: Private Configuration for 'R' Packages},
+    author = {Gábor Csárdi},
+    year = {2019},
+    note = {R package version 2.0.3},
+    url = {https://CRAN.R-project.org/package=pkgconfig},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[79]]
+
+To cite package ‘bitops’ in publications use:
+
+  S original by Steve Dutky initial R port, extensions by Martin Maechler; revised and modified by
+  Steve Dutky (2021). bitops: Bitwise Operations. R package version 1.0-7.
+  https://CRAN.R-project.org/package=bitops
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {bitops: Bitwise Operations},
+    author = {S original by Steve Dutky initial R port and extensions by Martin Maechler; revised and modified by Steve Dutky},
+    year = {2021},
+    note = {R package version 1.0-7},
+    url = {https://CRAN.R-project.org/package=bitops},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[80]]
+
+To cite package ‘lpsymphony’ in publications use:
+
+  Vladislav Kim (2020). lpsymphony: Symphony integer linear programming solver in R.
+  http://R-Forge.R-project.org/projects/rsymphony, https://projects.coin-or.org/SYMPHONY,
+  http://www.coin-or.org/download/source/SYMPHONY/.
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {lpsymphony: Symphony integer linear programming solver in R},
+    author = {Vladislav Kim},
+    year = {2020},
+    note = {http://R-Forge.R-project.org/projects/rsymphony,
+https://projects.coin-or.org/SYMPHONY,
+http://www.coin-or.org/download/source/SYMPHONY/},
+  }
+
+
+[[81]]
+
+To cite package ‘invgamma’ in publications use:
+
+  David Kahle and James Stamey (2017). invgamma: The Inverse Gamma Distribution. R package version
+  1.1. https://CRAN.R-project.org/package=invgamma
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {invgamma: The Inverse Gamma Distribution},
+    author = {David Kahle and James Stamey},
+    year = {2017},
+    note = {R package version 1.1},
+    url = {https://CRAN.R-project.org/package=invgamma},
+  }
+
+
+[[82]]
+
+To cite package ‘evaluate’ in publications use:
+
+  Hadley Wickham and Yihui Xie (2019). evaluate: Parsing and Evaluation Tools that Provide More
+  Details than the Default. R package version 0.14. https://CRAN.R-project.org/package=evaluate
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {evaluate: Parsing and Evaluation Tools that Provide More Details than the
+Default},
+    author = {Hadley Wickham and Yihui Xie},
+    year = {2019},
+    note = {R package version 0.14},
+    url = {https://CRAN.R-project.org/package=evaluate},
+  }
+
+
+[[83]]
+
+To cite the lattice package in publications use:
+
+  Sarkar, Deepayan (2008) Lattice: Multivariate Data Visualization with R. Springer, New York. ISBN
+  978-0-387-75968-5
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    title = {Lattice: Multivariate Data Visualization with R},
+    author = {Deepayan Sarkar},
+    publisher = {Springer},
+    address = {New York},
+    year = {2008},
+    note = {ISBN 978-0-387-75968-5},
+    url = {http://lmdvr.r-forge.r-project.org},
+  }
+
+
+[[84]]
+
+To cite package ‘purrr’ in publications use:
+
+  Lionel Henry and Hadley Wickham (2020). purrr: Functional Programming Tools. R package version
+  0.3.4. https://CRAN.R-project.org/package=purrr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {purrr: Functional Programming Tools},
+    author = {Lionel Henry and Hadley Wickham},
+    year = {2020},
+    note = {R package version 0.3.4},
+    url = {https://CRAN.R-project.org/package=purrr},
+  }
+
+
+[[85]]
+
+To cite package ‘htmlwidgets’ in publications use:
+
+  Ramnath Vaidyanathan, Yihui Xie, JJ Allaire, Joe Cheng, Carson Sievert and Kenton Russell (2020).
+  htmlwidgets: HTML Widgets for R. R package version 1.5.3.
+  https://CRAN.R-project.org/package=htmlwidgets
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {htmlwidgets: HTML Widgets for R},
+    author = {Ramnath Vaidyanathan and Yihui Xie and JJ Allaire and Joe Cheng and Carson Sievert and Kenton Russell},
+    year = {2020},
+    note = {R package version 1.5.3},
+    url = {https://CRAN.R-project.org/package=htmlwidgets},
+  }
+
+
+[[86]]
+
+To cite package ‘labeling’ in publications use:
+
+  Justin Talbot, (2020). labeling: Axis Labeling. R package version 0.4.2.
+  https://CRAN.R-project.org/package=labeling
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {labeling: Axis Labeling},
+    author = {Justin Talbot,},
+    year = {2020},
+    note = {R package version 0.4.2},
+    url = {https://CRAN.R-project.org/package=labeling},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[87]]
+
+To cite package ‘bit’ in publications use:
+
+  Jens Oehlschlägel and Brian Ripley (2020). bit: Classes and Methods for Fast Memory-Efficient
+  Boolean Selections. R package version 4.0.4. https://CRAN.R-project.org/package=bit
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {bit: Classes and Methods for Fast Memory-Efficient Boolean Selections},
+    author = {Jens Oehlschlägel and Brian Ripley},
+    year = {2020},
+    note = {R package version 4.0.4},
+    url = {https://CRAN.R-project.org/package=bit},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[88]]
+
+To cite package ‘tidyselect’ in publications use:
+
+  Lionel Henry and Hadley Wickham (2021). tidyselect: Select from a Set of Strings. R package
+  version 1.1.1. https://CRAN.R-project.org/package=tidyselect
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {tidyselect: Select from a Set of Strings},
+    author = {Lionel Henry and Hadley Wickham},
+    year = {2021},
+    note = {R package version 1.1.1},
+    url = {https://CRAN.R-project.org/package=tidyselect},
+  }
+
+
+[[89]]
+
+To cite package ‘magrittr’ in publications use:
+
+  Stefan Milton Bache and Hadley Wickham (2020). magrittr: A Forward-Pipe Operator for R. R package
+  version 2.0.1. https://CRAN.R-project.org/package=magrittr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {magrittr: A Forward-Pipe Operator for R},
+    author = {Stefan Milton Bache and Hadley Wickham},
+    year = {2020},
+    note = {R package version 2.0.1},
+    url = {https://CRAN.R-project.org/package=magrittr},
+  }
+
+
+[[90]]
+
+To cite package ‘R6’ in publications use:
+
+  Winston Chang (2020). R6: Encapsulated Classes with Reference Semantics. R package version 2.5.0.
+  https://CRAN.R-project.org/package=R6
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {R6: Encapsulated Classes with Reference Semantics},
+    author = {Winston Chang},
+    year = {2020},
+    note = {R package version 2.5.0},
+    url = {https://CRAN.R-project.org/package=R6},
+  }
+
+
+[[91]]
+
+To cite package ‘generics’ in publications use:
+
+  Hadley Wickham, Max Kuhn and Davis Vaughan (2020). generics: Common S3 Generics not Provided by
+  Base R Methods Related to Model Fitting. R package version 0.1.0.
+  https://CRAN.R-project.org/package=generics
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {generics: Common S3 Generics not Provided by Base R Methods Related to
+Model Fitting},
+    author = {Hadley Wickham and Max Kuhn and Davis Vaughan},
+    year = {2020},
+    note = {R package version 0.1.0},
+    url = {https://CRAN.R-project.org/package=generics},
+  }
+
+
+[[92]]
+
+To cite package ‘DelayedArray’ in publications use:
+
+  Hervé Pagès, with contributions from Peter Hickey and Aaron Lun (2021). DelayedArray: A unified
+  framework for working transparently with on-disk and in-memory array-like datasets. R package
+  version 0.16.3. https://bioconductor.org/packages/DelayedArray
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {DelayedArray: A unified framework for working transparently with on-disk and
+in-memory array-like datasets},
+    author = {Hervé Pagès and with contributions from Peter Hickey and Aaron Lun},
+    year = {2021},
+    note = {R package version 0.16.3},
+    url = {https://bioconductor.org/packages/DelayedArray},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[93]]
+
+To cite package ‘DBI’ in publications use:
+
+  R Special Interest Group on Databases (R-SIG-DB), Hadley Wickham and Kirill Müller (2021). DBI: R
+  Database Interface. R package version 1.1.1. https://CRAN.R-project.org/package=DBI
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {DBI: R Database Interface},
+    author = {{R Special Interest Group on Databases (R-SIG-DB)} and Hadley Wickham and Kirill Müller},
+    year = {2021},
+    note = {R package version 1.1.1},
+    url = {https://CRAN.R-project.org/package=DBI},
+  }
+
+
+[[94]]
+
+To cite package ‘pillar’ in publications use:
+
+  Kirill Müller and Hadley Wickham (2021). pillar: Coloured Formatting for Columns. R package
+  version 1.6.2. https://CRAN.R-project.org/package=pillar
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {pillar: Coloured Formatting for Columns},
+    author = {Kirill Müller and Hadley Wickham},
+    year = {2021},
+    note = {R package version 1.6.2},
+    url = {https://CRAN.R-project.org/package=pillar},
+  }
+
+
+[[95]]
+
+To cite package ‘haven’ in publications use:
+
+  Hadley Wickham and Evan Miller (2021). haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files.
+  R package version 2.4.3. https://CRAN.R-project.org/package=haven
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files},
+    author = {Hadley Wickham and Evan Miller},
+    year = {2021},
+    note = {R package version 2.4.3},
+    url = {https://CRAN.R-project.org/package=haven},
+  }
+
+
+[[96]]
+
+To cite package ‘foreign’ in publications use:
+
+  R Core Team (2020). foreign: Read Data Stored by 'Minitab', 'S', 'SAS', 'SPSS', 'Stata',
+  'Systat', 'Weka', 'dBase', .... R package version 0.8-81.
+  https://CRAN.R-project.org/package=foreign
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {foreign: Read Data Stored by 'Minitab', 'S', 'SAS', 'SPSS', 'Stata',
+'Systat', 'Weka', 'dBase', ...},
+    author = {{R Core Team}},
+    year = {2020},
+    note = {R package version 0.8-81},
+    url = {https://CRAN.R-project.org/package=foreign},
+  }
+
+
+[[97]]
+
+To cite package ‘withr’ in publications use:
+
+  Jim Hester, Kirill Müller, Kevin Ushey, Hadley Wickham and Winston Chang (2021). withr: Run Code
+  'With' Temporarily Modified Global State. R package version 2.4.2.
+  https://CRAN.R-project.org/package=withr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {withr: Run Code 'With' Temporarily Modified Global State},
+    author = {Jim Hester and Kirill Müller and Kevin Ushey and Hadley Wickham and Winston Chang},
+    year = {2021},
+    note = {R package version 2.4.2},
+    url = {https://CRAN.R-project.org/package=withr},
+  }
+
+
+[[98]]
+
+To cite the mixsqp package, please use:
+
+  Youngseok Kim, Peter Carbonetto, Matthew Stephens and Mihai Anitescu (2020). A fast algorithm for
+  maximum likelihood estimation of mixture proportions using sequential quadratic programming. To
+  appear in the Journal of Computational and Graphical Statistics,
+  doi:10.1080/10618600.2019.1689985
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {A fast algorithm for maximum likelihood estimation of mixture proportions using sequential quadratic programming},
+    author = {Youngseok Kim and Peter Carbonetto and Matthew Stephens and Mihai Anitescu},
+    journal = {Journal of Computational and Graphical Statistics},
+    year = {2020},
+    url = {https://doi.org/10.1080/10618600.2019.1689985},
+  }
+
+
+[[99]]
+
+Therneau T (2021). _A Package for Survival Analysis in R_. R package version 3.2-10, <URL:
+https://CRAN.R-project.org/package=survival>.
+
+Terry M. Therneau, Patricia M. Grambsch (2000). _Modeling Survival Data: Extending the Cox Model_.
+Springer, New York. ISBN 0-387-98784-3.
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+[[100]]
+
+To cite scatterplot3d in publications use:
+
+  Ligges, U. and Mächler, M. (2003). Scatterplot3d - an R Package for Visualizing Multivariate
+  Data. Journal of Statistical Software 8(11), 1-20.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {Scatterplot3d - an R Package for Visualizing Multivariate Data},
+    author = {Uwe Ligges and Martin M{\"a}chler},
+    journal = {Journal of Statistical Software},
+    year = {2003},
+    pages = {1--20},
+    number = {11},
+    volume = {8},
+    url = {http://www.jstatsoft.org},
+  }
+
+
+[[101]]
+
+To cite package ‘abind’ in publications use:
+
+  Tony Plate and Richard Heiberger (2016). abind: Combine Multidimensional Arrays. R package
+  version 1.4-5. https://CRAN.R-project.org/package=abind
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {abind: Combine Multidimensional Arrays},
+    author = {Tony Plate and Richard Heiberger},
+    year = {2016},
+    note = {R package version 1.4-5},
+    url = {https://CRAN.R-project.org/package=abind},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[102]]
+
+To cite package ‘RCurl’ in publications use:
+
+  Duncan Temple Lang (2021). RCurl: General Network (HTTP/FTP/...) Client Interface for R. R
+  package version 1.98-1.3. https://CRAN.R-project.org/package=RCurl
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {RCurl: General Network (HTTP/FTP/...) Client Interface for R},
+    author = {Duncan {Temple Lang}},
+    year = {2021},
+    note = {R package version 1.98-1.3},
+    url = {https://CRAN.R-project.org/package=RCurl},
+  }
+
+
+[[103]]
+
+To cite package ‘crayon’ in publications use:
+
+  Gábor Csárdi (2021). crayon: Colored Terminal Output. R package version 1.4.1.
+  https://CRAN.R-project.org/package=crayon
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {crayon: Colored Terminal Output},
+    author = {Gábor Csárdi},
+    year = {2021},
+    note = {R package version 1.4.1},
+    url = {https://CRAN.R-project.org/package=crayon},
+  }
+
+
+[[104]]
+
+To cite the car package in publications use:
+
+  John Fox and Sanford Weisberg (2019). An {R} Companion to Applied Regression, Third Edition.
+  Thousand Oaks CA: Sage. URL: https://socialsciences.mcmaster.ca/jfox/Books/Companion/
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    title = {An {R} Companion to Applied Regression},
+    edition = {Third},
+    author = {John Fox and Sanford Weisberg},
+    year = {2019},
+    publisher = {Sage},
+    address = {Thousand Oaks {CA}},
+    url = {https://socialsciences.mcmaster.ca/jfox/Books/Companion/},
+  }
+
+
+[[105]]
+
+To cite package ‘futile.options’ in publications use:
+
+  Brian Lee Yung Rowe (2018). futile.options: Futile Options Management. R package version 1.0.1.
+  https://CRAN.R-project.org/package=futile.options
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {futile.options: Futile Options Management},
+    author = {Brian Lee Yung Rowe},
+    year = {2018},
+    note = {R package version 1.0.1},
+    url = {https://CRAN.R-project.org/package=futile.options},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[106]]
+
+To cite package ‘fdrtool’ in publications use:
+
+  Bernd Klaus and Korbinian Strimmer. (2021). fdrtool: Estimation of (Local) False Discovery Rates
+  and Higher Criticism. R package version 1.2.16. https://CRAN.R-project.org/package=fdrtool
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {fdrtool: Estimation of (Local) False Discovery Rates and Higher Criticism},
+    author = {Bernd Klaus and Korbinian Strimmer.},
+    year = {2021},
+    note = {R package version 1.2.16},
+    url = {https://CRAN.R-project.org/package=fdrtool},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[107]]
+
+To cite package ‘KernSmooth’ in publications use:
+
+  Matt Wand (2020). KernSmooth: Functions for Kernel Smoothing Supporting Wand & Jones (1995). R
+  package version 2.23-18. https://CRAN.R-project.org/package=KernSmooth
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {KernSmooth: Functions for Kernel Smoothing Supporting Wand & Jones (1995)},
+    author = {Matt Wand},
+    year = {2020},
+    note = {R package version 2.23-18},
+    url = {https://CRAN.R-project.org/package=KernSmooth},
+  }
+
+
+[[108]]
+
+To cite package ‘utf8’ in publications use:
+
+  Patrick O. Perry (2021). utf8: Unicode Text Processing. R package version 1.2.1.
+  https://CRAN.R-project.org/package=utf8
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {utf8: Unicode Text Processing},
+    author = {Patrick O. Perry},
+    year = {2021},
+    note = {R package version 1.2.1},
+    url = {https://CRAN.R-project.org/package=utf8},
+  }
+
+
+[[109]]
+
+To cite the 'rmarkdown' package in publications, please use:
+
+  JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron
+  Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2021). rmarkdown:
+  Dynamic Documents for R. R package version 2.9. URL https://rmarkdown.rstudio.com.
+
+  Yihui Xie and J.J. Allaire and Garrett Grolemund (2018). R Markdown: The Definitive Guide.
+  Chapman and Hall/CRC. ISBN 9781138359338. URL https://bookdown.org/yihui/rmarkdown.
+
+  Yihui Xie and Christophe Dervieux and Emily Riederer (2020). R Markdown Cookbook. Chapman and
+  Hall/CRC. ISBN 9780367563837. URL https://bookdown.org/yihui/rmarkdown-cookbook.
+
+To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.
+
+
+[[110]]
+
+To cite package ‘locfit’ in publications use:
+
+  Catherine Loader (2020). locfit: Local Regression, Likelihood and Density Estimation. R package
+  version 1.5-9.4. https://CRAN.R-project.org/package=locfit
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {locfit: Local Regression, Likelihood and Density Estimation},
+    author = {Catherine Loader},
+    year = {2020},
+    note = {R package version 1.5-9.4},
+    url = {https://CRAN.R-project.org/package=locfit},
+  }
+
+
+[[111]]
+
+To cite package ‘readxl’ in publications use:
+
+  Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R package version 1.3.1.
+  https://CRAN.R-project.org/package=readxl
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {readxl: Read Excel Files},
+    author = {Hadley Wickham and Jennifer Bryan},
+    year = {2019},
+    note = {R package version 1.3.1},
+    url = {https://CRAN.R-project.org/package=readxl},
+  }
+
+
+[[112]]
+
+To cite package ‘data.table’ in publications use:
+
+  Matt Dowle and Arun Srinivasan (2021). data.table: Extension of `data.frame`. R package version
+  1.14.0. https://CRAN.R-project.org/package=data.table
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {data.table: Extension of `data.frame`},
+    author = {Matt Dowle and Arun Srinivasan},
+    year = {2021},
+    note = {R package version 1.14.0},
+    url = {https://CRAN.R-project.org/package=data.table},
+  }
+
+
+[[113]]
+
+To cite package ‘blob’ in publications use:
+
+  Hadley Wickham (2021). blob: A Simple S3 Class for Representing Vectors of Binary Data ('BLOBS').
+  R package version 1.2.2. https://CRAN.R-project.org/package=blob
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {blob: A Simple S3 Class for Representing Vectors of Binary Data
+('BLOBS')},
+    author = {Hadley Wickham},
+    year = {2021},
+    note = {R package version 1.2.2},
+    url = {https://CRAN.R-project.org/package=blob},
+  }
+
+
+[[114]]
+
+To cite package ‘forcats’ in publications use:
+
+  Hadley Wickham (2021). forcats: Tools for Working with Categorical Variables (Factors). R package
+  version 0.5.1. https://CRAN.R-project.org/package=forcats
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {forcats: Tools for Working with Categorical Variables (Factors)},
+    author = {Hadley Wickham},
+    year = {2021},
+    note = {R package version 0.5.1},
+    url = {https://CRAN.R-project.org/package=forcats},
+  }
+
+
+[[115]]
+
+To cite package ‘digest’ in publications use:
+
+  Dirk Eddelbuettel with contributions by Antoine Lucas, Jarek Tuszynski, Henrik Bengtsson, Simon
+  Urbanek, Mario Frasca, Bryan Lewis, Murray Stokely, Hannes Muehleisen, Duncan Murdoch, Jim
+  Hester, Wush Wu, Qiang Kou, Thierry Onkelinx, Michel Lang, Viliam Simko, Kurt Hornik, Radford
+  Neal, Kendon Bell, Matthew de Queljoe, Ion Suruceanu, Bill Denney, Dirk Schumacher and and
+  Winston Chang. (2020). digest: Create Compact Hash Digests of R Objects. R package version
+  0.6.27. https://CRAN.R-project.org/package=digest
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {digest: Create Compact Hash Digests of R Objects},
+    author = {Dirk Eddelbuettel with contributions by Antoine Lucas and Jarek Tuszynski and Henrik Bengtsson and Simon Urbanek and Mario Frasca and Bryan Lewis and Murray Stokely and Hannes Muehleisen and Duncan Murdoch and Jim Hester and Wush Wu and Qiang Kou and Thierry Onkelinx and Michel Lang and Viliam Simko and Kurt Hornik and Radford Neal and Kendon Bell and Matthew {de Queljoe} and Ion Suruceanu and Bill Denney and Dirk Schumacher and and Winston Chang.},
+    year = {2020},
+    note = {R package version 0.6.27},
+    url = {https://CRAN.R-project.org/package=digest},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[116]]
+
+To cite flashClust in publications use:
+
+  Peter Langfelder, Steve Horvath (2012). Fast R Functions for Robust Correlations and Hierarchical
+  Clustering. Journal of Statistical Software, 46(11), 1-17. URL http://www.jstatsoft.org/v46/i11/.
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {Fast {R} Functions for Robust Correlations and Hierarchical Clustering},
+    author = {Peter Langfelder and Steve Horvath},
+    journal = {Journal of Statistical Software},
+    year = {2012},
+    volume = {46},
+    number = {11},
+    pages = {1--17},
+    url = {http://www.jstatsoft.org/v46/i11/},
+  }
+
+
+[[117]]
+
+To cite package ‘xtable’ in publications use:
+
+  David B. Dahl, David Scott, Charles Roosen, Arni Magnusson and Jonathan Swinton (2019). xtable:
+  Export Tables to LaTeX or HTML. R package version 1.8-4.
+  https://CRAN.R-project.org/package=xtable
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {xtable: Export Tables to LaTeX or HTML},
+    author = {David B. Dahl and David Scott and Charles Roosen and Arni Magnusson and Jonathan Swinton},
+    year = {2019},
+    note = {R package version 1.8-4},
+    url = {https://CRAN.R-project.org/package=xtable},
+  }
+
+
+[[118]]
+
+To cite package ‘tidyr’ in publications use:
+
+  Hadley Wickham (2021). tidyr: Tidy Messy Data. R package version 1.1.3.
+  https://CRAN.R-project.org/package=tidyr
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {tidyr: Tidy Messy Data},
+    author = {Hadley Wickham},
+    year = {2021},
+    note = {R package version 1.1.3},
+    url = {https://CRAN.R-project.org/package=tidyr},
+  }
+
+
+[[119]]
+
+To cite package ‘munsell’ in publications use:
+
+  Charlotte Wickham (2018). munsell: Utilities for Using Munsell Colours. R package version 0.5.0.
+  https://CRAN.R-project.org/package=munsell
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {munsell: Utilities for Using Munsell Colours},
+    author = {Charlotte Wickham},
+    year = {2018},
+    note = {R package version 0.5.0},
+    url = {https://CRAN.R-project.org/package=munsell},
+  }
+
+ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and
+may need manual editing, see ‘help("citation")’.
+
+
+[[120]]
+
+To cite package ‘bslib’ in publications use:
+
+  Carson Sievert and Joe Cheng (2021). bslib: Custom 'Bootstrap' 'Sass' Themes for 'shiny' and
+  'rmarkdown'. R package version 0.2.5.1. https://CRAN.R-project.org/package=bslib
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {bslib: Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'},
+    author = {Carson Sievert and Joe Cheng},
+    year = {2021},
+    note = {R package version 0.2.5.1},
+    url = {https://CRAN.R-project.org/package=bslib},
+  }
+
+
