@@ -6,7 +6,8 @@ Citation: bioRxiv 2021.07.30.454373; doi: https://doi.org/10.1101/2021.07.30.454
 
 Emma C. Reilly (1), Mike Sportiello(1), Kris Lambert Emo(1), Andrea M. Amitrano(1), Rakshanda Jha(1), Ashwin B.R. Kumar(1), Nathan G. Laniewski(1,2), Hongmei Yang(3), Minsoo Kim(1,4), and David J. Topham(1,4)
 
-*authors contributed equally to this manuscript
+ER and MS contributed equally to this manuscript as co-first authors.
+
 1. Center for Vaccine Biology and Immunology, University of Rochester Medical Center, Rochester, NY 14642
 2. Department of Pediatrics, University of Rochester Medical Center, Rochester, NY 14642
 3. Department of Biostatistics and Computational Biology, University of Rochester Medical Center, Rochester, NY 14642
