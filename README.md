@@ -1,6 +1,4 @@
-# TRM subset paper 2021
-
-Title: CD49a Identifies Polyfunctional Memory CD8 T cell Subsets that Persist in the Lungs after Influenza Infection
+# CD49a Identifies Polyfunctional Memory CD8 T cell Subsets that Persist in the Lungs after Influenza Infection
 
 Citation: bioRxiv 2021.07.30.454373; doi: https://doi.org/10.1101/2021.07.30.454373 
 
@@ -13,4 +11,4 @@ ER and MS contributed equally to this manuscript as co-first authors.
 3. Department of Biostatistics and Computational Biology, University of Rochester Medical Center, Rochester, NY 14642
 4. Department of Microbiology and Immunology, University of Rochester Medical Center, Rochester, NY 14642
 
-This paper is currently under review at Frontiers in Immunology. Here is the code used throughout this project. Feel free to contact me here with any questions about the code. If there are questions about the paper more generally, please contact the corresponding author. Citation: bioRxiv 2021.07.30.454373; doi: https://doi.org/10.1101/2021.07.30.454373 
+This paper is currently in press at Frontiers in Immunology. Here is the code used throughout this project. Feel free to contact me here with any questions about the code. If there are questions about the paper more generally, please contact the corresponding author. Citation: bioRxiv 2021.07.30.454373; doi: https://doi.org/10.1101/2021.07.30.454373 
